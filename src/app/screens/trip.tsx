@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import dynamic from "next/dynamic";
 import type { CSSProperties } from "react";
 import type { Mode, Screen } from "../data";
 import { useApp } from "../store";
@@ -25,6 +25,15 @@ import {
   IconChat,
   IconArrowRight,
 } from "../icons";
+
+const MapView = dynamic(() => import("./MapView").then((mod) => mod.MapView), {
+  ssr: false,
+  loading: () => (
+    <div style={{ height: 360, borderRadius: 12, background: "var(--border-soft)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div className="small muted">Loading map…</div>
+    </div>
+  ),
+});
 
 export function tripNav(mode: Mode, t: (key: string, vars?: Record<string, string | number>) => string): NavTab[] {
   if (mode === "solo") {
@@ -192,28 +201,29 @@ export function TripDashboardScreen() {
 
 /* ──────────────── Map ──────────────── */
 
-interface Pin {
+interface MapPin {
   label: string;
-  top: string;
-  left: string;
+  lat: number;
+  lng: number;
   kind: "accent" | "ai" | "you" | "muted";
+  description?: string;
 }
 
-function pinsFor(tripId: string): Pin[] {
+function pinsFor(tripId: string): MapPin[] {
   if (tripId === "bali")
     return [
-      { label: "DPS airport", top: "14%", left: "16%", kind: "you" },
-      { label: "Villa Tulip", top: "30%", left: "46%", kind: "accent" },
-      { label: "Campuhan Ridge", top: "44%", left: "66%", kind: "ai" },
-      { label: "Tegalalang", top: "62%", left: "30%", kind: "accent" },
-      { label: "Tirta Empul", top: "78%", left: "58%", kind: "muted" },
+      { label: "DPS Airport", lat: -8.7481, lng: 115.1672, kind: "you", description: "Arrival airport" },
+      { label: "Villa Tulip", lat: -8.5192, lng: 115.2638, kind: "accent", description: "Private villa, pool, Ubud edge" },
+      { label: "Campuhan Ridge", lat: -8.5069, lng: 115.2625, kind: "ai", description: "Free, 20 min walk, sunset spot" },
+      { label: "Tegalalang Rice Terraces", lat: -8.4182, lng: 115.2925, kind: "accent", description: "Morning light, least busy" },
+      { label: "Tirta Empul Temple", lat: -8.4333, lng: 115.3117, kind: "muted", description: "Purification temple, sarong rental at gate" },
     ];
   return [
-    { label: "CDG", top: "16%", left: "10%", kind: "you" },
-    { label: "Hotel Sevigne", top: "30%", left: "38%", kind: "accent" },
-    { label: "Le Comptoir", top: "44%", left: "58%", kind: "ai" },
-    { label: "Louvre", top: "62%", left: "70%", kind: "accent" },
-    { label: "Musee d'Orsay", top: "73%", left: "22%", kind: "muted" },
+    { label: "CDG Airport", lat: 49.0097, lng: 2.5479, kind: "you", description: "Flight 1208 arrival/departure" },
+    { label: "Hotel Sevigne", lat: 48.8434, lng: 2.3488, kind: "accent", description: "Latin Quarter, 2 twin rooms" },
+    { label: "Le Comptoir", lat: 48.8512, lng: 2.3397, kind: "ai", description: "AI-suggested dinner, awaiting approval" },
+    { label: "Louvre Museum", lat: 48.8606, lng: 2.3376, kind: "accent", description: "Skip-the-line 09:00 slot" },
+    { label: "Musée d'Orsay", lat: 48.8600, lng: 2.3270, kind: "muted", description: "Impressionists, timed entry" },
   ];
 }
 
@@ -229,37 +239,8 @@ export function MapScreen() {
       onBack={canBack ? back : undefined}
     >
       <div className="content-tight">
-        <div className="map-area" aria-label="Stylised trip map">
-          <div className="map-grid" />
-          <div className="map-road r1" />
-          <div className="map-road r2" />
-          {trip.id === "paris" && <div className="map-river" />}
-          {pins.map((p) => (
-            <span key={p.label}>
-              <svg className={`od-media map-pin ${p.kind}`} style={{ top: p.top, left: p.left }} viewBox="0 0 30 38" aria-hidden="true">
-                <path className="pin-head" d="M15 1C8 1 3 6.3 3 12.4 3 22 15 37 15 37s12-15 12-24.6C27 6.3 22 1 15 1z" />
-                <circle className="pin-dot" cx="15" cy="12" r="4.5" />
-              </svg>
-              <span className="map-label" style={{ top: `calc(${p.top} + 30px)`, left: p.left }}>
-                {p.label}
-              </span>
-            </span>
-          ))}
-          <div className="map-overlay">
-            <span className="map-chip open">
-              <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M12 3l7 2.8v5c0 4.6-3 8-7 10.2-4-2.2-7-5.6-7-10.2v-5L12 3z" />
-                <path d="M8.8 12l2.4 2.4 4-4.6" />
-              </svg>
-              Open now
-            </span>
-            <span className="map-chip traffic">
-              <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M5 17a3 3 0 014-2.8M19 17a3 3 0 01-4-2.8M9 14.2V14a3 3 0 016 0v.2M12 3v4M12 7l2-1M12 7l-2-1" />
-              </svg>
-              Ferry 20 min
-            </span>
-          </div>
+        <div className="map-area" aria-label="Interactive trip map" style={{ height: 360, borderRadius: 12, overflow: "hidden" }}>
+          <MapView pins={pins} />
         </div>
       </div>
 
