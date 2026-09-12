@@ -1,0 +1,30 @@
+{
+  "name": "aeris",
+  "version": "0.1.0",
+  "private": true,
+  "allowScripts": true,
+  "scripts": {
+    "clean": "node -e \"['.next','out','dist'].forEach(d=>require('fs').rmSync(d,{recursive:true,force:true}))\"",
+    "dev": "node --require ./scripts/od-neutral.cjs node_modules/next/dist/bin/next dev",
+    "build": "node --require ./scripts/od-neutral.cjs node_modules/next/dist/bin/next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next/font": "^14.2.15",
+    "next": "^15.3.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.12",
+    "@types/node": "^24.0.14",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.7",
+    "eslint": "^9.30.1",
+    "eslint-config-next": "^15.3.5",
+    "playwright-core": "^1.63.0",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5.8.2"
+  }
+}

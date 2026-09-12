@@ -1,0 +1,7 @@
+node_modules/
+.next/
+_next/
+images/
+index.html
+404.html
+index.txt
