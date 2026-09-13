@@ -46,7 +46,7 @@ The product brief we converged on names of 5 broad solution directions, ranked f
 
 **Problem Tree**
 
-<img src="./Images/Flowchart_Images/Problem Tree" alt="Problem Tree" width="800" /> <br>
+<img src="./Images/Flowchart_Images/Problem Tree.png" alt="Problem Tree" width="800" /> <br>
 ***Problem Tree - Mapping the root causes and symptoms of group travel planning***
 
 **User Flows**
@@ -106,7 +106,7 @@ The prototype is built as a Next.js app with one screen component per flow-map e
 <img src="./Images/App_Design/AD04.png" alt="Profile Tab" width="340" /> <br>
 ***This is the profile tab for users to edit their profile info.*** 
 
-## ⭐ **4. What Makes It Different**
+## ⭐ **4. What Makes Us Different**
 
 * **The approval gate is one shared component, not a policy.** Every booking, vote outcome, accepted recommendation and disruption response (FL-02, FL-04, FL-05, FL-06) passes through the same review-and-confirm step (FL-07) before anything is written — old vs. new schedule, old vs. new cost, conditions, who's affected. Browsing, filtering and draft suggestions are explicitly ungated, so "always ask" never becomes a click-through habit.  
 * **Two tracks, one destination.** Manual search and Aeris AI suggestions start from the same screen and rejoin at the same candidate list — the AI is a fork in the path, never a toll gate. A traveller who ignores it entirely still reaches a booked trip.  
@@ -172,7 +172,7 @@ Our PRD left thirteen open questions; each was closed with a stated default befo
 
 ### 🗓️ **5.1 Execution Strategy & Resource Allocation**
 
-To ensure our MVP scope is achievable, we have mapped our team's specific technical capabilities directly to our architecture and established concrete milestones leading up to our final project submission on September 18.
+To ensure our MVP scope is achievable, we have mapped our team's specific technical capabilities directly to our architecture and established concrete milestones.
 
 | Team Member | Role & Tech Stack Mapping | Milestone Focus |
 | :--- | :--- | :--- |
