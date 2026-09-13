@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import type { Screen } from "./data";
 import { useApp } from "./store";
@@ -191,20 +192,32 @@ export function Photo({
   ratio,
   alt,
   className = "",
+  fallbackSrc,
+  onError,
 }: {
   src?: string;
   ratio?: string;
   alt?: string;
   className?: string;
+  fallbackSrc?: string;
+  onError?: () => void;
 }) {
-  if (!src) return null;
+  const [failed, setFailed] = useState(false);
+  const finalSrc = failed && fallbackSrc ? fallbackSrc : src;
+  if (!finalSrc) return null;
   return (
     <img
-      src={src}
+      src={finalSrc}
       alt={alt ?? ""}
       loading="lazy"
       className={`od-media ${className}`}
       style={{ aspectRatio: ratio ?? "auto" }}
+      onError={() => {
+        if (!failed && fallbackSrc) {
+          setFailed(true);
+        }
+        onError?.();
+      }}
     />
   );
 }

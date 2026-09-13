@@ -70,11 +70,18 @@ export function OtaSearchScreen() {
   const { go, back, route } = useApp();
   const vertical = v(route.params?.vertical);
   const isFlight = vertical === "flights";
+  const formatDate = (d: Date) => d.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 2);
+  const dayAfterTomorrow = new Date(today);
+  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 4);
+
   const [to, setTo] = useState(typeof route.params?.destination === "string" ? String(route.params.destination) : isFlight ? "Paris" : "Paris");
   const [from, setFrom] = useState("London");
   const [way, setWay] = useState<"return" | "oneway">("return");
-  const [dateA, setDateA] = useState("Fri 25 Sep");
-  const [dateB, setDateB] = useState("Sun 27 Sep");
+  const [dateA, setDateA] = useState(formatDate(today));
+  const [dateB, setDateB] = useState(formatDate(tomorrow));
   const [trav, setTrav] = useState("2");
   const [loading, setLoading] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState<"depart" | "return" | null>(null);
@@ -224,6 +231,8 @@ export function OtaSearchScreen() {
   );
 }
 
+const AIRLINE_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aa0a6' stroke-width='1.5'%3E%3Cpath d='M17.8 10.5l-1.5-1c-.4-.3-1.1-.3-1.5 0L6 14.5v3.5a1.5 1.5 0 0 1-3 0V5a3 3 0 0 1 5.67-1.72L16 5l3-3L17 1z'/%3E%3Cpath d='M10 11h4'/%3E%3C/svg%3E";
+
 /* ──────────────── Results ──────────────── */
 
 export function OtaResultsScreen() {
@@ -338,12 +347,12 @@ export function OtaResultsScreen() {
           ))}
         </div>
 
-        <div className="vstack" style={{ gap: 10, marginTop: 6 }}>
+<div className="vstack" style={{ gap: 10, marginTop: 6 }}>
           {sorted.map((o, i) => (
             <Card key={o.id} className="card-press" style={{ padding: 0, overflow: "hidden" }} onClick={() => go("ota-booking", { vertical, offer: o })}>
               <div className="hstack" style={{ gap: 0, alignItems: "stretch" }}>
                 {o.photo ? (
-                  <Photo src={o.photo} ratio="1/1" alt={o.title} className="ota-offer-photo" />
+                  <Photo src={o.photo} ratio="1/1" alt={o.title} className="ota-offer-photo" fallbackSrc={o.vertical === "flights" ? AIRLINE_FALLBACK : undefined} />
                 ) : (
                   <span className="ota-offer-photo ota-offer-ph" style={{ background: "var(--border-soft)" }}>
                     <Icon size={22} />

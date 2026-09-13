@@ -9,7 +9,7 @@
   .od-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--od-gap, 8px); }
   .od-fill    { flex: 1 1 0; min-width: 0; }
   .od-fixed   { flex: none; }
-  .od-grid    { display: grid; gap: var(--od-gap, 12px); grid-template-columns: repeat(var(--od-cols, 3), minmax(0, 1fr)); }
+  .od-grid    { display: grid; gap: var(--od-gap, 12px); grid-template-columns: repeat(var(--od-cols, 3), minmax(0, 1fr)); align-items: start; }
 
   .od-stat, .od-field, .od-cell { display: grid; gap: var(--od-gap, 2px); }
   :where(.od-stat,.od-field,.od-cell) > :where(*) { display: block; }
@@ -1744,6 +1744,8 @@ body {
   color: var(--fg);
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
+  min-height: 48px;
+  box-sizing: border-box;
 }
 
 .field-input-wrapper input:focus {

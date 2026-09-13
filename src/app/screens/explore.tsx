@@ -231,9 +231,16 @@ export function ExploreScreen() {
   const seed = last ? relatedFor(last.vertical) : relatedFor("flights");
   const first = tripList[0];
 
+  const formatDate = (d: Date) => d.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 2);
+  const dayAfterTomorrow = new Date(today);
+  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 4);
+
   const [searchDest, setSearchDest] = useState("");
-  const [searchDateA, setSearchDateA] = useState("Fri 25 Sep");
-  const [searchDateB, setSearchDateB] = useState("Sun 27 Sep");
+  const [searchDateA, setSearchDateA] = useState(formatDate(today));
+  const [searchDateB, setSearchDateB] = useState(formatDate(tomorrow));
   const [searchTrav, setSearchTrav] = useState("2");
   const [searchWay, setSearchWay] = useState<"return" | "oneway">("return");
   const [calendarOpen, setCalendarOpen] = useState<"depart" | "return" | null>(null);
