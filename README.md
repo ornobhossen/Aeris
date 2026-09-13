@@ -4,11 +4,11 @@
 
 **Problem Statement:** Travel Planner
 
-**Video Presentation:** \[Unlisted Youtube Link\]&nbsp;
+**Video Presentation:** [Unlisted Youtube Link]&nbsp;
 
-**Presentation Slides:** \[Public Link\]&nbsp;
+**Presentation Slides:** [Public Link]&nbsp;
 
-## **1\. Project Overview**
+## **1. Project Overview**
 
 ***The Problem*****:** Nowadays, setting up a trip consists of using different tools at the same time to manage the whole trip to a single place. There is no separate setting in particular markets specifically for arranging a trip. A search on a travel app, a note on a notepad, a text to a friend and you have no single place to plan or manage the trip. For a single person or the organiser of any group, it can be a complex job to get suggestions and make decisions, receive notifications about them, and still have no way of knowing what is happening. This is the “planner’s tragedy” today. It is true that OTAs (e.g., Trip.com and Booking.com) built for general use can handle finding and booking, but they fail to do the rest properly. There is no common trip state, collective voting, approval trail, or anything similar. The AI-first trip planners that you see are more of a black box. Usually, they just suggest or provide a feed, or sometimes even book without clear, explicit human approval, which could be the main reason why travellers are hesitant to let them decide.
 
@@ -28,7 +28,7 @@
 10. **Location, Navigation and Local Discovery** — routes and nearby suggestions from itinerary items, honest about whether travel/availability data is live, estimated or unavailable.  
 11. **Review, Approval, Notifications and History** — the shared approval gate and audit trail behind every booking, vote outcome, accepted recommendation and disruption response.
 
-## **2\. Ideation & Process**
+## **2. Ideation & Process**
 
 ### **2.1 Ideas We Considered**
 
@@ -38,45 +38,45 @@ The product brief we converged on names of 5 broad solution directions, ranked f
 | :---- | :---- |
 | **All-in-One Travel Planning and Booking Platform** (Chosen) | Kept as the foundation: manual browse/filter/compare/book must work completely on its own, so the product is never dependent on the AI actually being right.&nbsp; |
 | **Personalised AI Travel Companion** (Chosen) | Kept as an optional layer on top of Idea 1, which is the profile, budget and calendar-informed suggestions and a draft itinerary.&nbsp; |
-| **Collaborative Group Travel Planner** (Chosen)&nbsp; | Kept to remove the specific "chat-thread \+ spreadsheet" coordination tax that group organisers face: private preference submission, an overlap engine, and hidden voting instead of a poll no one answers.&nbsp; |
+| **Collaborative Group Travel Planner** (Chosen)&nbsp; | Kept to remove the specific "chat-thread + spreadsheet" coordination tax that group organisers face: private preference submission, an overlap engine, and hidden voting instead of a poll no one answers.&nbsp; |
 | **Adaptive Trip Management** (Chosen)&nbsp; | Kept because a confirmed itinerary that silently breaks on a real-world disruption (delay, cancellation, closure, weather) is a worse experience than no automation at all; changes must be ranked, reviewed and approved, never applied automatically.&nbsp; |
 | **Language and Local Guide Companion** (Not Chosen)&nbsp; | Dropped because Google Translate and other apps has covered these features and users do not need to use our app for translation in real time while they can use the other app which is much more efficient than this app.&nbsp; |
 
 ### **2.2 Ideation Boards**
 
-Our main ideation artefact is a set of flow diagrams. They sit on one shape language — green pill \= start/end, blue \= user input, grey \= system action, diamond \= decision, purple \= the rule-based Aeris engine, amber hexagon \= approval gate, red \= error/alternative path, teal \= the Central Trip Dashboard, dashed \= deliberately out of MVP — so the whole set reads as one system rather than unrelated sketches.&nbsp;
+Our main ideation artefact is a set of flow diagrams. They sit on one shape language — green pill = start/end, blue = user input, grey = system action, diamond = decision, purple = the rule-based Aeris engine, amber hexagon = approval gate, red = error/alternative path, teal = the Central Trip Dashboard, dashed = deliberately out of MVP — so the whole set reads as one system rather than unrelated sketches.&nbsp;
 
 &nbsp;
 
-\!\[User Flow (FL00\_01)\](./Images/Flowchart\_Images/FL00\_01.png)*Master flow \- stranger to completed trip*
+![User Flow (FL00_01)](./Images/Flowchart_Images/FL00_01.png)*Master flow - stranger to completed trip*
 
 &nbsp;
 
-\!\[User Flow (FL00\_02)\](./Images/Flowchart\_Images/FL00\_02.png)
+![User Flow (FL00_02)](./Images/Flowchart_Images/FL00_02.png)
 
 &nbsp;
 
-\!\[Use Flow (FL02\_01)\](./Images/Flowchart\_Images/FL02\_01.png)
+![Use Flow (FL02_01)](./Images/Flowchart_Images/FL02_01.png)
 
 &nbsp;
 
-\!\[User Flow (FL02\_02)\](./Images/Flowchart\_Images/FL02\_02.png)*Solo traveller \- search, compare, book*
+![User Flow (FL02_02)](./Images/Flowchart_Images/FL02_02.png)*Solo traveller - search, compare, book*
 
 &nbsp;
 
-\!\[User Flow (FL03\_01)\](./Images/Flowchart\_Images/FL03\_01.png)
+![User Flow (FL03_01)](./Images/Flowchart_Images/FL03_01.png)
 
 &nbsp;
 
-\!\[User Flow (FL03\_02)\](./Images/Flowchart\_Images/FL03\_02.png)
+![User Flow (FL03_02)](./Images/Flowchart_Images/FL03_02.png)
 
 &nbsp;
 
-\!\[User Flow (FL03\_03)\](./Images/Flowchart\_Images/FL03\_03.png)*Group organizer \- create, invite, match preferences*
+![User Flow (FL03_03)](./Images/Flowchart_Images/FL03_03.png)*Group organizer - create, invite, match preferences*
 
 &nbsp;
 
-\!\[User Flow (FL08)\](./Images/Flowchart\_Images/FL08.png)*Screen map \- what actually has to be built*
+![User Flow (FL08)](./Images/Flowchart_Images/FL08.png)*Screen map - what actually has to be built*
 
 &nbsp;
 
@@ -88,47 +88,47 @@ Our main ideation artefact is a set of flow diagrams. They sit on one shape lang
 | 10/9/2026 | Janelle Tan | Gave a lot of good tips about the prototype video and what to expect from the judges.&nbsp; | Agree with this and for the prototype video we used her explanations to tweak what gaps we have within the video.&nbsp; |
 | 12/9/2026 | Mah Qing Fung | Advised to cut off many functions such as Google Calendar from the prototype video of the app.&nbsp; | Disagree with this and will just briefly explain these functions shortly because it was important for our ideation of the app.&nbsp; |
 
-## **3\. Design & Prototype**
+## **3. Design & Prototype**
 
-**UI Prototype:** \[ [https://aeris-rust.vercel.app](https://aeris-rust.vercel.app) \]
+**UI Prototype:** [ [https://aeris-rust.vercel.app](https://aeris-rust.vercel.app) ]
 
 The prototype is built as a Next.js app with one screen component per flow-map entry; below are the key screens to walk through, matched to the flows above.&nbsp;
 
-\!\[First Page\](./Images/App\_Design/AD01.png) *This is the first page of the app before users signup/login for the app.*
+![First Page](./Images/App_Design/AD01.png) *This is the first page of the app before users signup/login for the app.*
 
 &nbsp;
 
-\!\[Trips Tab\](./Images/App\_Design/AD02.png) *This is the main dashboard of the app after users login.*
+![Trips Tab](./Images/App_Design/AD02.png) *This is the main dashboard of the app after users login.*
 
 &nbsp;
 
-\!\[Trip Planning\](./Images/App\_Design/AD05.png) *This is the overview of the trip planning, which users can choose either group trip or individual.*
+![Trip Planning](./Images/App_Design/AD05.png) *This is the overview of the trip planning, which users can choose either group trip or individual.*
 
 &nbsp;
 
-\!\[Maps & Plan\](./Images/App\_Design/AD06.png) *This is the map in the panning trip showing the destinations planned for the trip.*
+![Maps & Plan](./Images/App_Design/AD06.png) *This is the map in the panning trip showing the destinations planned for the trip.*
 
 &nbsp;
 
-\!\[Budget\](./Images/App\_Design/AD07.png) *This is the budget tab in the planning trip showing the budgets and expenses in the trip planned.*
+![Budget](./Images/App_Design/AD07.png) *This is the budget tab in the planning trip showing the budgets and expenses in the trip planned.*
 
 &nbsp;
 
-\!\[Group Chat\](./Images/App\_Design/AD08.png) *This is the group chat function of the group planning which allow users discuss their travel plans.*
+![Group Chat](./Images/App_Design/AD08.png) *This is the group chat function of the group planning which allow users discuss their travel plans.*
 
 &nbsp;
 
-\!\[Alerts\](./Images/App\_Design/AD09.png) *This is the alerts of the planning trip, showing alerts about flight delays and other changes.*
+![Alerts](./Images/App_Design/AD09.png) *This is the alerts of the planning trip, showing alerts about flight delays and other changes.*
 
 &nbsp;
 
-\!\[Explore Tab\](./Images/App\_Design/AD03.png) *This is the explore tab for users to book flights, hotels,cars, and attractions.*
+![Explore Tab](./Images/App_Design/AD03.png) *This is the explore tab for users to book flights, hotels,cars, and attractions.*
 
 &nbsp;
 
-\!\[Profile Tab\](./Images/App\_Design/AD04.png) *This is the profile tab for users to edit their profile info.*
+![Profile Tab](./Images/App_Design/AD04.png) *This is the profile tab for users to edit their profile info.*
 
-## **4\. What Makes It Different**
+## **4. What Makes It Different**
 
 * **The approval gate is one shared component, not a policy.** Every booking, vote outcome, accepted recommendation and disruption response (FL-02, FL-04, FL-05, FL-06) passes through the same review-and-confirm step (FL-07) before anything is written — old vs. new schedule, old vs. new cost, conditions, who's affected. Browsing, filtering and draft suggestions are explicitly ungated, so "always ask" never becomes a click-through habit.  
 * **Two tracks, one destination.** Manual search and Aeris AI suggestions start from the same screen and rejoin at the same candidate list — the AI is a fork in the path, never a toll gate. A traveller who ignores it entirely still reaches a booked trip.  
@@ -141,24 +141,24 @@ The prototype is built as a Next.js app with one screen component per flow-map e
 
 **One sentence**: every other planner asks you to trust it, Aeris asks you to approve it.
 
-## **5\. Technical Architecture & Feasibility**
+## **5. Technical Architecture & Feasibility**
 
 **Tech stack**
 
 | Layer | Tech Stack Used | Why and the Constraints |
 | :---- | :---- | :---- |
-| Frontend | Next.js 15 \+ React 19 \+ Tailwind&nbsp; | Single codebase, fast styling and no custom CSS needed but almost everything is client-side — you're paying for SSR you're not using. |
+| Frontend | Next.js 15 + React 19 + Tailwind&nbsp; | Single codebase, fast styling and no custom CSS needed but almost everything is client-side — you're paying for SSR you're not using. |
 | Backend/API | Next.js API Routes | No separate backend to deploy, same repo and same pipeline but serverless — no WebSockets, cold starts, short timeouts. |
-| Database \+ Auth | Supabase (PostgreSQL \+ Auth \+ Realtime) | Free Postgres database, auth, and realtime in one tool but it goes cold after inactivity, vendor lock-in on auth. |
-| APIs and Services | \- OpenAI API (AI Companion) | Powers the AI companion that listens for intents and suggests options but costs per token, 1-3s latency, rate limits on low tier. Constraints: Costs per token, 1-3s latency, rate limits on low tier. |
-| Trip Search | \- Algolia&nbsp; | Fast typo-tolerant search for trips and offers. Constraints: 10K requests/month free, then paid. |
-| Payments | \- Stripe&nbsp; | Industry-standard checkout and multi-currency payments. Constraints: 2.9% \+ 30p per transaction, requires business verification. |
-| Email Notifications | \- Resend&nbsp; | Simple transactional emails for invitations and confirmations. Constraints: 3K emails/month free, no SMS, depends on domain setup. |
-| Trip Photos | \- Cloudflare R2&nbsp; | Free egress object storage for trip photos with global CDN. Constraints: 10GB free storage, no built-in image resizing. |
-| Flights, Hotels, Cars, Activities | \- Travel Provider APIs&nbsp; | Power real flight, hotel, car, and activity search/booking. Constraints: Business accounts required, approval processes, weeks to integrate. |
-| Hosting \+ Analytics | \- Vercel | Zero-config Next.js deploy, free tier covers prototype, edge CDN. Constraints: Cold starts, no WebSocket support, 100GB bandwidth free. |
-| Error Monitoring | \- Sentry&nbsp; | Catches production errors with stack traces and user context. Constraints: 14-day retention, 50KB bundle overhead. |
-| Mobile — future | \- Expo Push Notifications&nbsp; | One API pushes to both iOS and Android. Constraints: $99/year Apple dev program, can't test on web. |
+| Database + Auth | Supabase (PostgreSQL + Auth + Realtime) | Free Postgres database, auth, and realtime in one tool but it goes cold after inactivity, vendor lock-in on auth. |
+| APIs and Services | - OpenAI API (AI Companion) | Powers the AI companion that listens for intents and suggests options but costs per token, 1-3s latency, rate limits on low tier. Constraints: Costs per token, 1-3s latency, rate limits on low tier. |
+| Trip Search | - Algolia&nbsp; | Fast typo-tolerant search for trips and offers. Constraints: 10K requests/month free, then paid. |
+| Payments | - Stripe&nbsp; | Industry-standard checkout and multi-currency payments. Constraints: 2.9% + 30p per transaction, requires business verification. |
+| Email Notifications | - Resend&nbsp; | Simple transactional emails for invitations and confirmations. Constraints: 3K emails/month free, no SMS, depends on domain setup. |
+| Trip Photos | - Cloudflare R2&nbsp; | Free egress object storage for trip photos with global CDN. Constraints: 10GB free storage, no built-in image resizing. |
+| Flights, Hotels, Cars, Activities | - Travel Provider APIs&nbsp; | Power real flight, hotel, car, and activity search/booking. Constraints: Business accounts required, approval processes, weeks to integrate. |
+| Hosting + Analytics | - Vercel | Zero-config Next.js deploy, free tier covers prototype, edge CDN. Constraints: Cold starts, no WebSocket support, 100GB bandwidth free. |
+| Error Monitoring | - Sentry&nbsp; | Catches production errors with stack traces and user context. Constraints: 14-day retention, 50KB bundle overhead. |
+| Mobile — future | - Expo Push Notifications&nbsp; | One API pushes to both iOS and Android. Constraints: $99/year Apple dev program, can't test on web. |
 
 &nbsp;
 
