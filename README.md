@@ -94,7 +94,7 @@ The prototype is built as a Next.js app with one screen component per flow-map e
 ***This is the alerts of the planning trip, showing alerts about flight delays and other changes.***
 
 <img src="./Images/App_Design/AD03.png" alt="Explore Tab" width="340" /> <br>
-***This is the explore tab for users to book flights, hotels,cars, and attractions.***
+***This is the explore tab for users to book flights, hotels, cars, and attractions.***
 
 <img src="./Images/App_Design/AD04.png" alt="Profile Tab" width="340" /> <br>
 ***This is the profile tab for users to edit their profile info.*** 
