@@ -121,20 +121,21 @@ The prototype is built as a Next.js app with one screen component per flow-map e
 | Frontend | Next.js 15 + React 19 + Tailwind&nbsp; | Single codebase, fast styling and no custom CSS needed but almost everything is client-side — you're paying for SSR you're not using. |
 | Backend/API | Next.js API Routes | No separate backend to deploy, same repo and same pipeline but serverless — no WebSockets, cold starts, short timeouts. |
 | Database + Auth | Supabase (PostgreSQL + Auth + Realtime) | Free Postgres database, auth, and realtime in one tool but it goes cold after inactivity, vendor lock-in on auth. |
-| APIs and Services | - OpenAI API (AI Companion) | Powers the AI companion that listens for intents and suggests options but costs per token, 1-3s latency, rate limits on low tier. Constraints: Costs per token, 1-3s latency, rate limits on low tier. |
-|  | - Algolia (Trip Search)&nbsp; | Fast typo-tolerant search for trips and offers. Constraints: 10K requests/month free, then paid. |
-|  | - Stripe (Payments)&nbsp; | Industry-standard checkout and multi-currency payments. Constraints: 2.9% + 30p per transaction, requires business verification. |
-|  | - Resend (Email Notifications)&nbsp; | Simple transactional emails for invitations and confirmations. Constraints: 3K emails/month free, no SMS, depends on domain setup. |
-|  | - Cloudflare R2 (Trip Photos)&nbsp; | Free egress object storage for trip photos with global CDN. Constraints: 10GB free storage, no built-in image resizing. |
-|  | - Travel Provider APIs (Flights, Hotels, Cars, Activities)&nbsp; | Power real flight, hotel, car, and activity search/booking. Constraints: Business accounts required, approval processes, weeks to integrate. |
-| Hosting + Monitoring | - Vercel (App Hosting + Analytics) | Zero-config Next.js deploy, free tier covers prototype, edge CDN. Constraints: Cold starts, no WebSocket support, 100GB bandwidth free. |
-|  | - Sentry (Error Monitoring)&nbsp; | Catches production errors with stack traces and user context. Constraints: 14-day retention, 50KB bundle overhead. |
-|  | - Expo Push Notifications (Mobile — future)&nbsp; | One API pushes to both iOS and Android. Constraints: $99/year Apple dev program, can't test on web. |
+| APIs and Services | - OpenAI API (AI Companion) | Powers the AI companion that listens for intents and suggests options but costs per token, 1-3s latency and rate limits on low tier. |
+|  | - Algolia (Trip Search)&nbsp; | Fast typo-tolerant search for trips and offers but 10K requests/month free, then paid. |
+|  | - Stripe (Payments)&nbsp; | Industry-standard checkout and multi-currency payments but 2.9% + 30p per transaction and requires business verification. |
+|  | - Resend (Email Notifications)&nbsp; | Simple transactional emails for invitations and confirmations but 3K emails/month free, no SMS and depends on domain setup. |
+|  | - Cloudflare R2 (Trip Photos)&nbsp; | Free egress object storage for trip photos with global CDN but 10GB free storage and no built-in image resizing. |
+|  | - Travel Provider APIs (Flights, Hotels, Cars, Activities)&nbsp; | Power real flight, hotel, car, and activity search/booking but business accounts required, approval processes and take weeks to integrate. |
+| Hosting + Monitoring | - Vercel (App Hosting + Analytics) | Zero-config Next.js deploy, free tier covers prototype, edge CDN but cold starts, no WebSocket support and 100GB bandwidth free. |
+|  | - Sentry (Error Monitoring)&nbsp; | Catches production errors with stack traces and user context but 14-day retention and 50KB bundle overhead. |
+|  | - Expo Push Notifications (Mobile — future)&nbsp; | One API pushes to both iOS and Android. Constraints: $99/year Apple dev program and we can't test on web. |
 
 &nbsp;
 
 **System Overview**
-<img src="./Images/System Architecture Diagram/Before.png" alt="Current System Architecture" width="340" /> <br>
+
+<img src="./Images/System Architecture Diagram/Before.png" alt="Current System Architecture"/> <br>
 
 **Build plan & scope**&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -158,3 +159,7 @@ Our PRD left thirteen open questions; each was closed with a stated default befo
 **If time is tight, the flows degrade cleanly:** cut shared expenses to equal splits only, and cut disruption replanning to flights only. The approval gate and the Central Trip Dashboard are built first regardless, since every other flow depends on them and the demo hangs together around them.
 
 **Deliberately out of scope for this build** (drawn as dashed nodes in the flow diagrams rather than silently omitted): two-way Google Calendar sync, cascading multi-item disruption replans (MVP handles one affected item at a time), full-state itinerary rollback, and any category beyond flights and accommodation for live search.
+
+**Future Plan's System Overview**
+
+<img src="./Images/System Architecture Diagram/After.png" alt="Future System Architecture"/>
