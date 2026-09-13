@@ -47,42 +47,17 @@ The product brief we converged on names of 5 broad solution directions, ranked f
 Our main ideation artefact is a set of flow diagrams. They sit on one shape language — green pill = start/end, blue = user input, grey = system action, diamond = decision, purple = the rule-based Aeris engine, amber hexagon = approval gate, red = error/alternative path, teal = the Central Trip Dashboard, dashed = deliberately out of MVP — so the whole set reads as one system rather than unrelated sketches.
 
 <img src="./Images/Flowchart_Images/FL00_01.png" alt="User Flow (FL00_01)" width="800" />
-
 <img src="./Images/Flowchart_Images/FL00_02.png" alt="User Flow (FL00_02)" width="800" />
-<br />
 *Master flow - stranger to completed trip*
 
-&nbsp;
-
-<img src="./Images/Flowchart_Images/FL02_01.png" alt="Use Flow (FL02_01)" width="800" />
-
-&nbsp;
-
-<img src="./Images/Flowchart_Images/FL02_02.png" alt="User Flow (FL02_02)" width="800" />
-<br />
+<img src="./Images/Flowchart_Images/FL02_01.png" alt="Use Flow (FL02_01)" width="800" /><img src="./Images/Flowchart_Images/FL02_02.png" alt="User Flow (FL02_02)" width="800" />
 *Solo traveller - search, compare, book*
 
-&nbsp;
-
-<img src="./Images/Flowchart_Images/FL03_01.png" alt="User Flow (FL03_01)" width="800" />
-
-&nbsp;
-
-<img src="./Images/Flowchart_Images/FL03_02.png" alt="User Flow (FL03_02)" width="800" />
-
-&nbsp;
-
-<img src="./Images/Flowchart_Images/FL03_03.png" alt="User Flow (FL03_03)" width="800" />
-<br />
+<img src="./Images/Flowchart_Images/FL03_01.png" alt="User Flow (FL03_01)" width="800" /><img src="./Images/Flowchart_Images/FL03_02.png" alt="User Flow (FL03_02)" width="800" /><img src="./Images/Flowchart_Images/FL03_03.png" alt="User Flow (FL03_03)" width="800" />
 *Group organizer - create, invite, match preferences*
 
-&nbsp;
-
 <img src="./Images/Flowchart_Images/FL08.png" alt="User Flow (FL08)" width="800" />
-<br />
 *Screen map - what actually has to be built*
-
-&nbsp;
 
 ### 🤝 **2.3 Mentor Consultation**
 
@@ -99,55 +74,30 @@ Our main ideation artefact is a set of flow diagrams. They sit on one shape lang
 The prototype is built as a Next.js app with one screen component per flow-map entry; below are the key screens to walk through, matched to the flows above.&nbsp;
 
 <img src="./Images/App_Design/AD01.png" alt="First Page" width="340" />
-<br />
 *This is the first page of the app before users signup/login for the app.*
 
-&nbsp;
-
 <img src="./Images/App_Design/AD02.png" alt="Trips Tab" width="340" />
-<br />
 *This is the main dashboard of the app after users login.*
 
-&nbsp;
-
 <img src="./Images/App_Design/AD05.png" alt="Trip Planning" width="340" />
-<br />
 *This is the overview of the trip planning, which users can choose either group trip or individual.*
 
-&nbsp;
-
 <img src="./Images/App_Design/AD06.png" alt="Maps & Plan" width="340" />
-<br />
 *This is the map in the panning trip showing the destinations planned for the trip.*
 
-&nbsp;
-
 <img src="./Images/App_Design/AD07.png" alt="Budget" width="340" />
-<br />
 *This is the budget tab in the planning trip showing the budgets and expenses in the trip planned.*
 
-&nbsp;
-
 <img src="./Images/App_Design/AD08.png" alt="Group Chat" width="340" />
-<br />
 *This is the group chat function of the group planning which allow users discuss their travel plans.*
 
-&nbsp;
-
 <img src="./Images/App_Design/AD09.png" alt="Alerts" width="340" />
-<br />
 *This is the alerts of the planning trip, showing alerts about flight delays and other changes.*
 
-&nbsp;
-
 <img src="./Images/App_Design/AD03.png" alt="Explore Tab" width="340" />
-<br />
 *This is the explore tab for users to book flights, hotels,cars, and attractions.*
 
-&nbsp;
-
 <img src="./Images/App_Design/AD04.png" alt="Profile Tab" width="340" />
-<br />
 *This is the profile tab for users to edit their profile info.*
 
 ## ⭐ **4. What Makes It Different**
