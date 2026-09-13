@@ -2,7 +2,7 @@
 
 **Team:** Ornob Hossen, Koh Shi Qi, Ruvenesvaran A/L Manivannan, Pang Yoke Leap (The team name is Iasis)
 
-**Problem Statement:** Travel Planner
+**Problem Statement:** Planning an Escape
 
 **Video Presentation:** [Unlisted Youtube Link]&nbsp;
 
@@ -10,9 +10,9 @@
 
 ## 🌍 **1. Project Overview**
 
-Nowadays, setting up a trip consists of using different tools at the same time to manage the whole trip to a single place. There is no separate setting in particular markets specifically for arranging a trip. A search on a travel app, a note on a notepad, a text to a friend and you have no single place to plan or manage the trip. For a single person or the organiser of any group, it can be a complex job to get suggestions and make decisions, receive notifications about them, and still have no way of knowing what is happening. This is the “planner’s tragedy” today. It is true that OTAs (e.g., Trip.com and Booking.com) built for general use can handle finding and booking, but they fail to do the rest properly. There is no common trip state, collective voting, approval trail, or anything similar. The AI-first trip planners that you see are more of a black box. Usually, they just suggest or provide a feed, or sometimes even book without clear, explicit human approval, which could be the main reason why travellers are hesitant to let them decide.
+***The Problem***: Nowadays, setting up a trip consists of using different tools at the same time to manage the whole trip to a single place. There is no separate setting in particular markets specifically for arranging a trip. A search on a travel app, a note on a notepad, a text to a friend and you have no single place to plan or manage the trip. For a single person or the organiser of any group, it can be a complex job to get suggestions and make decisions, receive notifications about them, and still have no way of knowing what is happening. This is the “planner’s tragedy” today. It is true that OTAs (e.g., Trip.com and Booking.com) built for general use can handle finding and booking, but they fail to do the rest properly. There is no common trip state, collective voting, approval trail, or anything similar. The AI-first trip planners that you see are more of a black box. Usually, they just suggest or provide a feed, or sometimes even book without clear, explicit human approval, which could be the main reason why travellers are hesitant to let them decide.
 
-***Our Solution*****:** **Aeris is an all-in-one travel planning and booking platform with optional AI assistance**. Travellers can manually browse, filter, compare and book flights, accommodation, transport, attractions and activities at every stage — the AI never has to be involved. Optionally, Aeris AI reads a traveller's saved preferences, budget and calendar to recommend options, draft a day-by-day itinerary, coordinate a group's overlapping dates and budgets, and propose a revised plan when something changes. What makes Aeris different is that nothing books, pays, votes or reshuffles the itinerary without an explicit human approval — and every one of those approvals is recorded on a change history. The traveller always keeps the final selection, booking, payment and itinerary update.&nbsp;
+***Our Solution***: **Aeris is an all-in-one travel planning and booking platform with optional AI assistance**. Travellers can manually browse, filter, compare and book flights, accommodation, transport, attractions and activities at every stage — the AI never has to be involved. Optionally, Aeris AI reads a traveller's saved preferences, budget and calendar to recommend options, draft a day-by-day itinerary, coordinate a group's overlapping dates and budgets, and propose a revised plan when something changes. What makes Aeris different is that nothing books, pays, votes or reshuffles the itinerary without an explicit human approval — and every one of those approvals is recorded on a change history. The traveller always keeps the final selection, booking, payment and itinerary update.&nbsp;
 
 **Feature set:**
 
@@ -46,18 +46,17 @@ The product brief we converged on names of 5 broad solution directions, ranked f
 
 Our main ideation artefact is a set of flow diagrams. They sit on one shape language — green pill = start/end, blue = user input, grey = system action, diamond = decision, purple = the rule-based Aeris engine, amber hexagon = approval gate, red = error/alternative path, teal = the Central Trip Dashboard, dashed = deliberately out of MVP — so the whole set reads as one system rather than unrelated sketches.
 
-<img src="./Images/Flowchart_Images/FL00_01.png" alt="User Flow (FL00_01)" width="800" />
-<img src="./Images/Flowchart_Images/FL00_02.png" alt="User Flow (FL00_02)" width="800" />
-*Master flow - stranger to completed trip*
+<img src="./Images/Flowchart_Images/FL00_01.png" alt="User Flow (FL00_01)" width="800" /><img src="./Images/Flowchart_Images/FL00_02.png" alt="User Flow (FL00_02)" width="800" />
+***Master flow - stranger to completed trip***
 
 <img src="./Images/Flowchart_Images/FL02_01.png" alt="Use Flow (FL02_01)" width="800" /><img src="./Images/Flowchart_Images/FL02_02.png" alt="User Flow (FL02_02)" width="800" />
-*Solo traveller - search, compare, book*
+***Solo traveller - search, compare, book***
 
 <img src="./Images/Flowchart_Images/FL03_01.png" alt="User Flow (FL03_01)" width="800" /><img src="./Images/Flowchart_Images/FL03_02.png" alt="User Flow (FL03_02)" width="800" /><img src="./Images/Flowchart_Images/FL03_03.png" alt="User Flow (FL03_03)" width="800" />
-*Group organizer - create, invite, match preferences*
+***Group organizer - create, invite, match preferences***
 
 <img src="./Images/Flowchart_Images/FL08.png" alt="User Flow (FL08)" width="800" />
-*Screen map - what actually has to be built*
+***Screen map - what actually has to be built***
 
 ### 🤝 **2.3 Mentor Consultation**
 
