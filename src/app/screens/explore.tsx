@@ -20,6 +20,9 @@ import {
   IconSparkle,
 } from "../icons";
 
+const GLIDE_MS = 9000;
+const DRAG_THRESHOLD = 6;
+
 const VERT_ICON: Record<Vertical, typeof IconPlane> = {
   flights: IconPlane,
   hotels: IconHome,
@@ -59,54 +62,144 @@ function getCheapestPerVertical(): OtaOffer[] {
 function CheapestDeals() {
   const { money, go } = useApp();
   const deals = getCheapestPerVertical();
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const stRef = useRef({
+    startX: 0,
+    originX: 0,
+    half: 912,
+    dragging: false,
+    moved: false,
+    suppress: false,
+  });
+  const [grabbing, setGrabbing] = useState(false);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const half = track.scrollWidth / 2;
+    if (half > 0 && Number.isFinite(half)) stRef.current.half = half;
+    track.style.animation = `deal-glide ${GLIDE_MS}ms linear infinite`;
+  }, []);
+
+  const currentX = () => {
+    const track = trackRef.current;
+    if (!track) return 0;
+    return new DOMMatrixReadOnly(getComputedStyle(track).transform).m41 || 0;
+  };
+
+  const onMove = (e: PointerEvent) => {
+    const s = stRef.current;
+    const track = trackRef.current;
+    if (!s.dragging || !track) return;
+    const dx = e.clientX - s.startX;
+    if (!s.moved) {
+      if (Math.abs(dx) <= DRAG_THRESHOLD) return;
+      s.moved = true;
+      s.suppress = true;
+      track.style.animation = "none";
+      const x = Math.max(-s.half, Math.min(0, s.originX + dx));
+      track.style.transform = `translate3d(${x}px, 0, 0)`;
+      return;
+    }
+    const x = Math.max(-s.half, Math.min(0, s.originX + dx));
+    track.style.transform = `translate3d(${x}px, 0, 0)`;
+  };
+
+  const onUp = () => {
+    const s = stRef.current;
+    const track = trackRef.current;
+    if (!s.dragging || !track) return;
+    window.removeEventListener("pointermove", onMove);
+    window.removeEventListener("pointerup", onUp);
+    window.removeEventListener("pointercancel", onUp);
+    s.dragging = false;
+    setGrabbing(false);
+    if (s.moved) {
+      let x = currentX();
+      while (x < -s.half) x += s.half;
+      while (x > 0) x -= s.half;
+      const elapsed = Math.min(1, Math.max(0, -x / s.half)) * GLIDE_MS;
+      track.style.transform = "";
+      track.style.animation = `deal-glide ${GLIDE_MS}ms linear infinite`;
+      track.style.animationDelay = `-${elapsed}ms`;
+    } else {
+      track.style.animationPlayState = "running";
+    }
+  };
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const s = stRef.current;
+    s.suppress = false;
+    s.startX = e.clientX;
+    s.originX = currentX();
+    s.dragging = true;
+    s.moved = false;
+    track.style.animationPlayState = "paused";
+    setGrabbing(true);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+  };
 
   return (
-    <div className="deal-grid">
-      {deals.map((d) => {
-        const Icon = VERT_ICON[d.vertical];
-        const grad = VERTICALS.find(v => v.v === d.vertical)?.grad ?? "var(--accent)";
-        return (
-          <button
-            key={d.id}
-            className="deal-card"
-            style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, overflow: "hidden" }}
-            onClick={() => go("ota-booking", { vertical: d.vertical, offerId: d.id })}
-          >
-            <div className="deal-media">
-              {d.photo ? (
-                <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-                  <Photo src={d.photo} ratio="16/9" alt={d.title} className="deal-photo" />
-                </div>
-              ) : (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", background: "var(--border-soft)" }}>
-                  <Icon size={28} className="muted" />
-                </div>
-              )}
-              <span className="deal-vertical-badge" style={{ background: grad }}>
-                <Icon size={11} style={{ color: "white" }} />
-              </span>
-            </div>
-            <div className="deal-info" style={{ padding: 12 }}>
-              <div className="hstack" style={{ justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
-                <span className="deal-title" style={{ fontWeight: 650, fontSize: 13.5 }}>{d.title}</span>
-                <span className="deal-price" style={{ fontWeight: 700, fontSize: 15 }}>{money(d.price)}</span>
-              </div>
-              <div className="deal-meta" style={{ fontSize: 12, color: "var(--muted)", marginBottom: 8 }}>
-                {d.subtitle}
-              </div>
-              <div className="hstack" style={{ gap: 6, alignItems: "center" }}>
-                <span style={{ display: "flex", alignItems: "center", gap: 2 }}>
-                  <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3l7 2.8v5c0 4.6-3 8-7 10.2-4-2.2-7-5.6-7-10.2v-5L12 3z"/><path d="M8.8 12l2.4 2.4 4-4.6"/></svg>
-                  <span style={{ fontWeight: 500 }}>&#9733; {d.rating}</span>
-                </span>
-                <span style={{ display: "flex", alignItems: "center", gap: 2, color: "var(--muted)" }}>
-                  <IconChevronRight size={12} />
+    <div className="deal-marquee" ref={viewportRef}>
+      <div
+        ref={trackRef}
+        className={`deal-track${grabbing ? " is-grabbing" : ""}`}
+        onPointerDown={onPointerDown}
+      >
+        {[...deals, ...deals].map((d, i) => {
+          const Icon = VERT_ICON[d.vertical];
+          const grad = VERTICALS.find(v => v.v === d.vertical)?.grad ?? "var(--accent)";
+          return (
+            <button
+              key={`${d.id}-${i}`}
+              className="deal-card"
+              style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, overflow: "hidden", flex: "0 0 280px" }}
+              onClick={() => {
+                if (stRef.current.suppress) return;
+                go("ota-booking", { vertical: d.vertical, offerId: d.id });
+              }}
+            >
+              <div className="deal-media">
+                {d.photo ? (
+                  <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+                    <Photo src={d.photo} ratio="16/9" alt={d.title} className="deal-photo" />
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", background: "var(--border-soft)" }}>
+                    <Icon size={28} className="muted" />
+                  </div>
+                )}
+                <span className="deal-vertical-badge" style={{ background: grad }}>
+                  <Icon size={11} style={{ color: "white" }} />
                 </span>
               </div>
-            </div>
-          </button>
-        );
-      })}
+              <div className="deal-info" style={{ padding: 12 }}>
+                <div className="hstack" style={{ justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
+                  <span className="deal-title" style={{ fontWeight: 650, fontSize: 13.5 }}>{d.title}</span>
+                  <span className="deal-price" style={{ fontWeight: 700, fontSize: 15 }}>{money(d.price)}</span>
+                </div>
+                <div className="deal-meta" style={{ fontSize: 12, color: "var(--muted)", marginBottom: 8 }}>
+                  {d.subtitle}
+                </div>
+                <div className="hstack" style={{ gap: 6, alignItems: "center" }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3l7 2.8v5c0 4.6-3 8-7 10.2-4-2.2-7-5.6-7-10.2v-5L12 3z"/><path d="M8.8 12l2.4 2.4 4-4.6"/></svg>
+                    <span style={{ fontWeight: 500 }}>&#9733; {d.rating}</span>
+                  </span>
+                  <span style={{ display: "flex", alignItems: "center", gap: 2, color: "var(--muted)" }}>
+                    <IconChevronRight size={12} />
+                  </span>
+                </div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
