@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import type { OtaOffer, Vertical } from "../data";
 import { OTA_OFFERS } from "../data";
 import { useApp } from "../store";
@@ -21,6 +21,7 @@ import {
   IconClock,
   IconMapPin,
 } from "../icons";
+import { searchOffers, SearchParams } from "../lib/ota-search";
 
 const VERT_TITLE: Record<Vertical, string> = {
   flights: "Flights",
@@ -188,12 +189,26 @@ export function OtaResultsScreen() {
   const vertical = v(route.params?.vertical);
   const destination = typeof route.params?.destination === "string" ? String(route.params.destination) : "Paris";
   const dates = typeof route.params?.dates === "string" ? String(route.params.dates) : "";
+  const from = typeof route.params?.from === "string" ? String(route.params.from) : "London";
+  const way = (typeof route.params?.way === "string" ? String(route.params.way) : "return") as "return" | "oneway";
 
   const [sort, setSort] = useState<"rec" | "price" | "rating">("rec");
   const [filter, setFilter] = useState<string>("all");
   const [map, setMap] = useState(false);
+  const [offers, setOffers] = useState<OtaOffer[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const offers = OTA_OFFERS.filter((o) => o.vertical === vertical);
+  useEffect(() => {
+    const params: SearchParams = { vertical, destination, from, dates, way };
+    setLoading(true);
+    searchOffers(params).then((data) => {
+      setOffers(data);
+      setLoading(false);
+    }).catch(() => {
+      setOffers([]);
+      setLoading(false);
+    });
+  }, [vertical, destination, from, dates, way]);
 
   const categories = useMemo(() => {
     const all = offers.flatMap((o) => o.tags.map((t) => t.split("·")[0].trim()));
@@ -210,9 +225,25 @@ export function OtaResultsScreen() {
   }, [offers]);
 
   const filt = filter === "all" ? offers : offers.filter((o) => o.tags[0]?.toLowerCase().includes(filter.toLowerCase()) || o.subtitle.toLowerCase().includes(filter.toLowerCase()) || o.meta.location?.toLowerCase().includes(filter.toLowerCase()));
-  const sorted = [...filt].sort((a, b) => (sort === "price" ? Number(a.price) - Number(b.price) : sort === "rating" ? b.rating - a.rating : b.rating - a.rating + (a.id.includes("uber") ? 1 : 0)));
+  const sorted = [...filt].sort((a, b) => (sort === "price" ? Number(a.price) - Number(b.price) : sort === "rating" ? b.rating - a.rating : b.rating - a.rating));
 
   const Icon = VERT_ICON[vertical];
+
+  if (loading) {
+    return (
+      <Shell title={`${VERT_TITLE[vertical]} · ${destination}`} sub={dates} onBack={back}>
+        <div className="content">
+          <div className="empty-state" style={{ paddingTop: 60 }}>
+            <div className="es-icon spin">
+              <Icon size={26} />
+            </div>
+            <h3>Searching {destination}...</h3>
+            <p className="small muted">Finding the best options for you</p>
+          </div>
+        </div>
+      </Shell>
+    );
+  }
 
   return (
     <Shell
