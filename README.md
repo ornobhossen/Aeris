@@ -44,6 +44,13 @@ The product brief we converged on names of 5 broad solution directions, ranked f
 
 ### 🗺️ **2.2 Ideation Boards**
 
+**Problem Tree**
+
+<img src="./Images/Flowchart_Images/Problem Tree" alt="Problem Tree" width="800" /> <br>
+***Problem Tree - Mapping the root causes and symptoms of group travel planning***
+
+**User Flows**
+
 Our main ideation artefact is a set of flow diagrams. They sit on one shape language — green pill = start/end, blue = user input, grey = system action, diamond = decision, purple = the rule-based Aeris engine, amber hexagon = approval gate, red = error/alternative path, teal = the Central Trip Dashboard, dashed = deliberately out of MVP — so the whole set reads as one system rather than unrelated sketches.
 
 <img src="./Images/Flowchart_Images/FL00_01.png" alt="User Flow (FL00_01)" width="800" /><img src="./Images/Flowchart_Images/FL00_02.png" alt="User Flow (FL00_02)" width="800" /> <br>
@@ -162,3 +169,21 @@ Our PRD left thirteen open questions; each was closed with a stated default befo
 **Future Plan's System Overview**
 
 <img src="./Images/System Architecture Diagram/After.png" alt="Future System Architecture"/>
+
+### 🗓️ **5.1 Execution Strategy & Resource Allocation**
+
+To ensure our MVP scope is achievable, we have mapped our team's specific technical capabilities directly to our architecture and established concrete milestones leading up to our final project submission on September 18.
+
+| Team Member | Role & Tech Stack Mapping | Milestone Focus |
+| :--- | :--- | :--- |
+| **Ornob Hossen** | AI Integration & Search (OpenAI API, Algolia) | AI recommendation logic and search indexing implementation. |
+| **Koh Shi Qi** | Frontend UI & Database Auth (Next.js, Tailwind CSS, Supabase) | Core interface, user flow, and database schema integration. |
+| **Ruvenesvaran A/L Manivannan** | External APIs & Payments (Stripe, Travel APIs) | Multi-currency logic and checkout flow integration. |
+| **Pang Yoke Leap** | Deployment & Operations (Vercel, Resend, Sentry) | CI/CD pipeline, error monitoring and making sure to stay ahead of the final submission. |
+
+## 🚀 **6. Scalability & Future Impact (V2 Roadmap)**
+
+While Aeris initially targets university cohorts and budget-conscious friend groups, the platform’s underlying shared-state architecture provides a clear path to scale into wider markets:
+
+* **B2B White-Labeling for Travel Agencies:** Travel agents currently rely on back-and-forth emails and static PDFs to propose itineraries. Aeris can be white-labeled, allowing agents to invite clients into a branded, interactive trip dashboard where clients can view options, vote, and approve bookings directly.
+* **Travel Provider API Expansion:** Moving beyond flights and accommodation, V2 will integrate live availability for niche activities, guided tours, and local transit networks, monetizing through affiliate commissions on high-volume group bookings.
