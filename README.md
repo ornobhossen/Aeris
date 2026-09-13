@@ -1,4 +1,4 @@
-# **Aeris by Iasis**
+# ✈️ **Aeris by Iasis**
 
 **Team:** Ornob Hossen, Koh Shi Qi, Ruvenesvaran A/L Manivannan, Pang Yoke Leap (The team name is Iasis)
 
@@ -8,9 +8,9 @@
 
 **Presentation Slides:** [Public Link]&nbsp;
 
-## **1. Project Overview**
+## 🌍 **1. Project Overview**
 
-***The Problem*****:** Nowadays, setting up a trip consists of using different tools at the same time to manage the whole trip to a single place. There is no separate setting in particular markets specifically for arranging a trip. A search on a travel app, a note on a notepad, a text to a friend and you have no single place to plan or manage the trip. For a single person or the organiser of any group, it can be a complex job to get suggestions and make decisions, receive notifications about them, and still have no way of knowing what is happening. This is the “planner’s tragedy” today. It is true that OTAs (e.g., Trip.com and Booking.com) built for general use can handle finding and booking, but they fail to do the rest properly. There is no common trip state, collective voting, approval trail, or anything similar. The AI-first trip planners that you see are more of a black box. Usually, they just suggest or provide a feed, or sometimes even book without clear, explicit human approval, which could be the main reason why travellers are hesitant to let them decide.
+Nowadays, setting up a trip consists of using different tools at the same time to manage the whole trip to a single place. There is no separate setting in particular markets specifically for arranging a trip. A search on a travel app, a note on a notepad, a text to a friend and you have no single place to plan or manage the trip. For a single person or the organiser of any group, it can be a complex job to get suggestions and make decisions, receive notifications about them, and still have no way of knowing what is happening. This is the “planner’s tragedy” today. It is true that OTAs (e.g., Trip.com and Booking.com) built for general use can handle finding and booking, but they fail to do the rest properly. There is no common trip state, collective voting, approval trail, or anything similar. The AI-first trip planners that you see are more of a black box. Usually, they just suggest or provide a feed, or sometimes even book without clear, explicit human approval, which could be the main reason why travellers are hesitant to let them decide.
 
 ***Our Solution*****:** **Aeris is an all-in-one travel planning and booking platform with optional AI assistance**. Travellers can manually browse, filter, compare and book flights, accommodation, transport, attractions and activities at every stage — the AI never has to be involved. Optionally, Aeris AI reads a traveller's saved preferences, budget and calendar to recommend options, draft a day-by-day itinerary, coordinate a group's overlapping dates and budgets, and propose a revised plan when something changes. What makes Aeris different is that nothing books, pays, votes or reshuffles the itinerary without an explicit human approval — and every one of those approvals is recorded on a change history. The traveller always keeps the final selection, booking, payment and itinerary update.&nbsp;
 
@@ -28,9 +28,9 @@
 10. **Location, Navigation and Local Discovery** — routes and nearby suggestions from itinerary items, honest about whether travel/availability data is live, estimated or unavailable.  
 11. **Review, Approval, Notifications and History** — the shared approval gate and audit trail behind every booking, vote outcome, accepted recommendation and disruption response.
 
-## **2. Ideation & Process**
+## 💡 **2. Ideation & Process**
 
-### **2.1 Ideas We Considered**
+### 💭 **2.1 Ideas We Considered**
 
 The product brief we converged on names of 5 broad solution directions, ranked from most to least central. Only four were kept.
 
@@ -42,7 +42,7 @@ The product brief we converged on names of 5 broad solution directions, ranked f
 | **Adaptive Trip Management** (Chosen)&nbsp; | Kept because a confirmed itinerary that silently breaks on a real-world disruption (delay, cancellation, closure, weather) is a worse experience than no automation at all; changes must be ranked, reviewed and approved, never applied automatically.&nbsp; |
 | **Language and Local Guide Companion** (Not Chosen)&nbsp; | Dropped because Google Translate and other apps has covered these features and users do not need to use our app for translation in real time while they can use the other app which is much more efficient than this app.&nbsp; |
 
-### **2.2 Ideation Boards**
+### 🗺️ **2.2 Ideation Boards**
 
 Our main ideation artefact is a set of flow diagrams. They sit on one shape language — green pill = start/end, blue = user input, grey = system action, diamond = decision, purple = the rule-based Aeris engine, amber hexagon = approval gate, red = error/alternative path, teal = the Central Trip Dashboard, dashed = deliberately out of MVP — so the whole set reads as one system rather than unrelated sketches.&nbsp;
 
@@ -88,7 +88,7 @@ Our main ideation artefact is a set of flow diagrams. They sit on one shape lang
 
 &nbsp;
 
-### **2.3 Mentor Consultation**
+### 🤝 **2.3 Mentor Consultation**
 
 | Date | Mentor | Feedback Received | What Was Changed |
 | :---- | :---- | :---- | :---- |
@@ -96,7 +96,7 @@ Our main ideation artefact is a set of flow diagrams. They sit on one shape lang
 | 10/9/2026 | Janelle Tan | Gave a lot of good tips about the prototype video and what to expect from the judges.&nbsp; | Agree with this and for the prototype video we used her explanations to tweak what gaps we have within the video.&nbsp; |
 | 12/9/2026 | Mah Qing Fung | Advised to cut off many functions such as Google Calendar from the prototype video of the app.&nbsp; | Disagree with this and will just briefly explain these functions shortly because it was important for our ideation of the app.&nbsp; |
 
-## **3. Design & Prototype**
+## 🎨 **3. Design & Prototype**
 
 **UI Prototype:** [ [https://aeris-rust.vercel.app](https://aeris-rust.vercel.app) ]
 
@@ -154,7 +154,7 @@ The prototype is built as a Next.js app with one screen component per flow-map e
 
 *This is the profile tab for users to edit their profile info.*
 
-## **4. What Makes It Different**
+## ⭐ **4. What Makes It Different**
 
 * **The approval gate is one shared component, not a policy.** Every booking, vote outcome, accepted recommendation and disruption response (FL-02, FL-04, FL-05, FL-06) passes through the same review-and-confirm step (FL-07) before anything is written — old vs. new schedule, old vs. new cost, conditions, who's affected. Browsing, filtering and draft suggestions are explicitly ungated, so "always ask" never becomes a click-through habit.  
 * **Two tracks, one destination.** Manual search and Aeris AI suggestions start from the same screen and rejoin at the same candidate list — the AI is a fork in the path, never a toll gate. A traveller who ignores it entirely still reaches a booked trip.  
@@ -167,7 +167,7 @@ The prototype is built as a Next.js app with one screen component per flow-map e
 
 **One sentence**: every other planner asks you to trust it, Aeris asks you to approve it.
 
-## **5. Technical Architecture & Feasibility**
+## 🛠️ **5. Technical Architecture & Feasibility**
 
 **Tech stack**
 
