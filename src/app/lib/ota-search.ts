@@ -104,26 +104,37 @@ function getAirlineLogo(name: string): string {
   return AIRLINE_LOGOS[name] || "https://images.kiwi.com/airlines/64/BA.png";
 }
 
+const PLANE_FILES: Record<string, string> = {
+  A320: "Lufthansa Airbus A320-211 D-AIQT 01.jpg",
+  A330: "Airbus A330-300.jpg",
+  A350: "Airbus A350-941 F-WWCF MSN002 ILA Berlin 2016 17.jpg",
+  B738: "Southwest Boeing 737-700 N947WN BWI MD1.jpg",
+  B777: "Qatar Boeing 777-300ER A7-BES IAD VA1.jpg",
+};
+
+const PLANE_PHOTO = (code: string) =>
+  `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(PLANE_FILES[code] || PLANE_FILES.A320)}?width=800`;
+
 const AIRLINE_PLANES: Record<string, string> = {
-  "EasyJet": "https://images.kiwi.com/aircraft/64/A320.png",
-  "Ryanair": "https://images.kiwi.com/aircraft/64/B738.png",
-  "British Airways": "https://images.kiwi.com/aircraft/64/A320.png",
-  "Air France": "https://images.kiwi.com/aircraft/64/A320.png",
-  "Lufthansa": "https://images.kiwi.com/aircraft/64/A320.png",
-  "KLM": "https://images.kiwi.com/aircraft/64/B738.png",
-  "Vueling": "https://images.kiwi.com/aircraft/64/A320.png",
-  "Wizz Air": "https://images.kiwi.com/aircraft/64/A320.png",
-  "Turkish Airlines": "https://images.kiwi.com/aircraft/64/A330.png",
-  "Emirates": "https://images.kiwi.com/aircraft/64/B777.png",
-  "Qatar Airways": "https://images.kiwi.com/aircraft/64/A350.png",
-  "Singapore Airlines": "https://images.kiwi.com/aircraft/64/A350.png",
-  "American Airlines": "https://images.kiwi.com/aircraft/64/B738.png",
-  "Delta": "https://images.kiwi.com/aircraft/64/B738.png",
-  "United": "https://images.kiwi.com/aircraft/64/B738.png",
+  "EasyJet": "A320",
+  "Ryanair": "B738",
+  "British Airways": "A320",
+  "Air France": "A320",
+  "Lufthansa": "A320",
+  "KLM": "B738",
+  "Vueling": "A320",
+  "Wizz Air": "A320",
+  "Turkish Airlines": "A330",
+  "Emirates": "B777",
+  "Qatar Airways": "A350",
+  "Singapore Airlines": "A350",
+  "American Airlines": "B738",
+  "Delta": "B738",
+  "United": "B738",
 };
 
 function getAirlinePlane(name: string): string {
-  return AIRLINE_PLANES[name] || "https://images.kiwi.com/aircraft/64/A320.png";
+  return PLANE_PHOTO(AIRLINE_PLANES[name] || "A320");
 }
 
 export async function searchFlights(params: SearchParams): Promise<OtaOffer[]> {

@@ -550,7 +550,7 @@ export function OtaBookingScreen() {
     <Shell title={`${Title} · details`} sub={offer.title} onBack={back}>
       <div className="content">
         {displayPhoto ? (
-          <Photo src={displayPhoto} ratio={displayRatio} alt={offer.title} />
+          <Photo src={displayPhoto} ratio={displayRatio} alt={offer.title} fallbackSrc={offer.vertical === "flights" ? AIRLINE_FALLBACK : undefined} />
         ) : (
           <div className="ota-hero">
             <Icon size={30} />
