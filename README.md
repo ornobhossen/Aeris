@@ -73,31 +73,31 @@ Our main ideation artefact is a set of flow diagrams. They sit on one shape lang
 The prototype is built as a Next.js app with one screen component per flow-map entry; below are the key screens to walk through, matched to the flows above.&nbsp;
 
 <img src="./Images/App_Design/AD01.png" alt="First Page" width="340" />
-*This is the first page of the app before users signup/login for the app.*
+***This is the first page of the app before users signup/login for the app.***
 
 <img src="./Images/App_Design/AD02.png" alt="Trips Tab" width="340" />
-*This is the main dashboard of the app after users login.*
+***This is the main dashboard of the app after users login.***
 
 <img src="./Images/App_Design/AD05.png" alt="Trip Planning" width="340" />
-*This is the overview of the trip planning, which users can choose either group trip or individual.*
+***This is the overview of the trip planning, which users can choose either group trip or individual.***
 
 <img src="./Images/App_Design/AD06.png" alt="Maps & Plan" width="340" />
-*This is the map in the panning trip showing the destinations planned for the trip.*
+***This is the map in the panning trip showing the destinations planned for the trip.***
 
 <img src="./Images/App_Design/AD07.png" alt="Budget" width="340" />
-*This is the budget tab in the planning trip showing the budgets and expenses in the trip planned.*
+***This is the budget tab in the planning trip showing the budgets and expenses in the trip planned.***
 
 <img src="./Images/App_Design/AD08.png" alt="Group Chat" width="340" />
-*This is the group chat function of the group planning which allow users discuss their travel plans.*
+***This is the group chat function of the group planning which allow users discuss their travel plans.***
 
 <img src="./Images/App_Design/AD09.png" alt="Alerts" width="340" />
-*This is the alerts of the planning trip, showing alerts about flight delays and other changes.*
+***This is the alerts of the planning trip, showing alerts about flight delays and other changes.***
 
 <img src="./Images/App_Design/AD03.png" alt="Explore Tab" width="340" />
-*This is the explore tab for users to book flights, hotels,cars, and attractions.*
+***This is the explore tab for users to book flights, hotels,cars, and attractions.***
 
 <img src="./Images/App_Design/AD04.png" alt="Profile Tab" width="340" />
-*This is the profile tab for users to edit their profile info.*
+***This is the profile tab for users to edit their profile info.***
 
 ## ⭐ **4. What Makes It Different**
 
