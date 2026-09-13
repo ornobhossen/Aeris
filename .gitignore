@@ -7,3 +7,4 @@ index.txt
 .env
 .env.*
 !.env.example
+desktop.ini

@@ -44,13 +44,9 @@ The product brief we converged on names of 5 broad solution directions, ranked f
 
 ### 🗺️ **2.2 Ideation Boards**
 
-Our main ideation artefact is a set of flow diagrams. They sit on one shape language — green pill = start/end, blue = user input, grey = system action, diamond = decision, purple = the rule-based Aeris engine, amber hexagon = approval gate, red = error/alternative path, teal = the Central Trip Dashboard, dashed = deliberately out of MVP — so the whole set reads as one system rather than unrelated sketches.&nbsp;
-
-&nbsp;
+Our main ideation artefact is a set of flow diagrams. They sit on one shape language — green pill = start/end, blue = user input, grey = system action, diamond = decision, purple = the rule-based Aeris engine, amber hexagon = approval gate, red = error/alternative path, teal = the Central Trip Dashboard, dashed = deliberately out of MVP — so the whole set reads as one system rather than unrelated sketches.
 
 <img src="./Images/Flowchart_Images/FL00_01.png" alt="User Flow (FL00_01)" width="800" />
-
-&nbsp;
 
 <img src="./Images/Flowchart_Images/FL00_02.png" alt="User Flow (FL00_02)" width="800" />
 <br />
