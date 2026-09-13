@@ -179,10 +179,8 @@ function CheapestDeals() {
                 </span>
               </div>
               <div className="deal-info" style={{ padding: 12 }}>
-                <div className="hstack" style={{ justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
-                  <span className="deal-title" style={{ fontWeight: 650, fontSize: 13.5 }}>{d.title}</span>
-                  <span className="deal-price" style={{ fontWeight: 700, fontSize: 15 }}>{money(d.price)}</span>
-                </div>
+                <span className="deal-title" style={{ fontWeight: 650, fontSize: 13.5, display: "block", marginBottom: 2 }}>{d.title}</span>
+                <span className="deal-price" style={{ fontWeight: 700, fontSize: 15, display: "block", marginBottom: 8 }}>{money(d.price)}</span>
                 <div className="deal-meta" style={{ fontSize: 12, color: "var(--muted)", marginBottom: 8 }}>
                   {d.subtitle}
                 </div>
