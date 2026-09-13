@@ -122,20 +122,19 @@ The prototype is built as a Next.js app with one screen component per flow-map e
 | Backend/API | Next.js API Routes | No separate backend to deploy, same repo and same pipeline but serverless — no WebSockets, cold starts, short timeouts. |
 | Database + Auth | Supabase (PostgreSQL + Auth + Realtime) | Free Postgres database, auth, and realtime in one tool but it goes cold after inactivity, vendor lock-in on auth. |
 | APIs and Services | - OpenAI API (AI Companion) | Powers the AI companion that listens for intents and suggests options but costs per token, 1-3s latency, rate limits on low tier. Constraints: Costs per token, 1-3s latency, rate limits on low tier. |
-| Trip Search | - Algolia&nbsp; | Fast typo-tolerant search for trips and offers. Constraints: 10K requests/month free, then paid. |
-| Payments | - Stripe&nbsp; | Industry-standard checkout and multi-currency payments. Constraints: 2.9% + 30p per transaction, requires business verification. |
-| Email Notifications | - Resend&nbsp; | Simple transactional emails for invitations and confirmations. Constraints: 3K emails/month free, no SMS, depends on domain setup. |
-| Trip Photos | - Cloudflare R2&nbsp; | Free egress object storage for trip photos with global CDN. Constraints: 10GB free storage, no built-in image resizing. |
-| Flights, Hotels, Cars, Activities | - Travel Provider APIs&nbsp; | Power real flight, hotel, car, and activity search/booking. Constraints: Business accounts required, approval processes, weeks to integrate. |
-| Hosting + Analytics | - Vercel | Zero-config Next.js deploy, free tier covers prototype, edge CDN. Constraints: Cold starts, no WebSocket support, 100GB bandwidth free. |
-| Error Monitoring | - Sentry&nbsp; | Catches production errors with stack traces and user context. Constraints: 14-day retention, 50KB bundle overhead. |
-| Mobile — future | - Expo Push Notifications&nbsp; | One API pushes to both iOS and Android. Constraints: $99/year Apple dev program, can't test on web. |
+|  | - Algolia (Trip Search)&nbsp; | Fast typo-tolerant search for trips and offers. Constraints: 10K requests/month free, then paid. |
+|  | - Stripe (Payments)&nbsp; | Industry-standard checkout and multi-currency payments. Constraints: 2.9% + 30p per transaction, requires business verification. |
+|  | - Resend (Email Notifications)&nbsp; | Simple transactional emails for invitations and confirmations. Constraints: 3K emails/month free, no SMS, depends on domain setup. |
+|  | - Cloudflare R2 (Trip Photos)&nbsp; | Free egress object storage for trip photos with global CDN. Constraints: 10GB free storage, no built-in image resizing. |
+|  | - Travel Provider APIs (Flights, Hotels, Cars, Activities)&nbsp; | Power real flight, hotel, car, and activity search/booking. Constraints: Business accounts required, approval processes, weeks to integrate. |
+| Hosting + Monitoring | - Vercel (App Hosting + Analytics) | Zero-config Next.js deploy, free tier covers prototype, edge CDN. Constraints: Cold starts, no WebSocket support, 100GB bandwidth free. |
+|  | - Sentry (Error Monitoring)&nbsp; | Catches production errors with stack traces and user context. Constraints: 14-day retention, 50KB bundle overhead. |
+|  | - Expo Push Notifications (Mobile — future)&nbsp; | One API pushes to both iOS and Android. Constraints: $99/year Apple dev program, can't test on web. |
 
 &nbsp;
 
-**System architecture diagram**
-
-&nbsp;
+**System Overview**
+<img src="./Images/System Architecture Diagram/Before.png" alt="Current System Architecture" width="340" /> <br>
 
 **Build plan & scope**&nbsp;&nbsp;&nbsp;&nbsp;
 
