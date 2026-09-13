@@ -4,13 +4,13 @@
 
 **Problem Statement:** Planning an Escape
 
-**Video Presentation:** [Unlisted Youtube Link]&nbsp;
+**Video Presentation:** https://youtu.be/Q221x8aiMc8 (Best resolution is 1080p or 720p)&nbsp;
 
-**Presentation Slides:** [Public Link]&nbsp;
+**Presentation Slides:** https://canva.link/dyhh966uk7h0844&nbsp;
 
 ## 🌍 **1. Project Overview**
 
-***The Problem***: Nowadays, setting up a trip consists of using different tools at the same time to manage the whole trip to a single place. There is no separate setting in particular markets specifically for arranging a trip. A search on a travel app, a note on a notepad, a text to a friend and you have no single place to plan or manage the trip. For a single person or the organiser of any group, it can be a complex job to get suggestions and make decisions, receive notifications about them, and still have no way of knowing what is happening. This is the “planner’s tragedy” today. It is true that OTAs (e.g., Trip.com and Booking.com) built for general use can handle finding and booking, but they fail to do the rest properly. There is no common trip state, collective voting, approval trail, or anything similar. The AI-first trip planners that you see are more of a black box. Usually, they just suggest or provide a feed, or sometimes even book without clear, explicit human approval, which could be the main reason why travellers are hesitant to let them decide.
+***The Problem***: Nowadays, setting up a trip requires using multiple disjointed tools. A search on a travel app, a note on a notepad, and a text to a friend leaves you with no central place to manage the itinerary. For our specific target group-the designated "group planner" for university cohorts and budget conscious friend groups-it is a complex job to align competing schedules, track split expenses, and get consensus without acting as a debt collector. This is the “planner’s tragedy.” Online Travel Agencies (Like Trip.com or Booking.com) handle booking but fail at group coordination, lacking a common trip state, collective voting, or approval trails. Meanwhile, AI-first planners act as a black box, suggesting or booking without explicit human approval, which is exactly why these organizers hesitate to trust them.
 
 ***Our Solution***: **Aeris is an all-in-one travel planning and booking platform with optional AI assistance**. Travellers can manually browse, filter, compare and book flights, accommodation, transport, attractions and activities at every stage — the AI never has to be involved. Optionally, Aeris AI reads a traveller's saved preferences, budget and calendar to recommend options, draft a day-by-day itinerary, coordinate a group's overlapping dates and budgets, and propose a revised plan when something changes. What makes Aeris different is that nothing books, pays, votes or reshuffles the itinerary without an explicit human approval — and every one of those approvals is recorded on a change history. The traveller always keeps the final selection, booking, payment and itinerary update.&nbsp;
 
@@ -32,7 +32,7 @@
 
 ### 💭 **2.1 Ideas We Considered**
 
-The product brief we converged on names of 5 broad solution directions, ranked from most to least central. Only four were kept.
+The product brief we converged on names of 5 broad solution directions, ranked from most to least central. Only four were kept. Our original concept focused entirely on an AI automated booking tool that would generate and finalize itineraries without user intervention. We quickly realized that handing over financial and scheduling control to a black box created more anxiety than it solved, prompting a major pivot in our design. This realization led us to our final iteration: a collaborative group planner where the AI acts strictly as an optional recommender, ensuring that every booking and schedule change requires explicit human approval.
 
 | Idea | Why it was dropped / kept |
 | :---- | :---- |
