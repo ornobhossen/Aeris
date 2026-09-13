@@ -58,6 +58,7 @@ Our main ideation artefact is a set of flow diagrams. They sit on one shape lang
 <img src="./Images/Flowchart_Images/FL08.png" alt="User Flow (FL08)" width="800" />
 ***Screen map - what actually has to be built***
 
+
 ### 🤝 **2.3 Mentor Consultation**
 
 | Date | Mentor | Feedback Received | What Was Changed |
@@ -98,6 +99,7 @@ The prototype is built as a Next.js app with one screen component per flow-map e
 
 <img src="./Images/App_Design/AD04.png" alt="Profile Tab" width="340" />
 ***This is the profile tab for users to edit their profile info.***
+
 
 ## ⭐ **4. What Makes It Different**
 
