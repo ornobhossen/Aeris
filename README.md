@@ -49,10 +49,10 @@ Our main ideation artefact is a set of flow diagrams. They sit on one shape lang
 <img src="./Images/Flowchart_Images/FL00_01.png" alt="User Flow (FL00_01)" width="800" /><img src="./Images/Flowchart_Images/FL00_02.png" alt="User Flow (FL00_02)" width="800" />
 ***Master flow - stranger to completed trip***
 
-<img src="./Images/Flowchart_Images/FL02_01.png" alt="Use Flow (FL02_01)" width="800" /><img src="./Images/Flowchart_Images/FL02_02.png" alt="User Flow (FL02_02)" width="800" />
+<img src="./Images/Flowchart_Images/FL02_01.png" alt="Use Flow (FL02_01)" width="800" /><img src="./Images/Flowchart_Images/FL02_02.png" alt="User Flow (FL02_02)" width="800" /> <br>
 ***Solo traveller - search, compare, book***
 
-<img src="./Images/Flowchart_Images/FL03_01.png" alt="User Flow (FL03_01)" width="800" /><img src="./Images/Flowchart_Images/FL03_02.png" alt="User Flow (FL03_02)" width="800" /><img src="./Images/Flowchart_Images/FL03_03.png" alt="User Flow (FL03_03)" width="800" />
+<img src="./Images/Flowchart_Images/FL03_01.png" alt="User Flow (FL03_01)" width="800" /><img src="./Images/Flowchart_Images/FL03_02.png" alt="User Flow (FL03_02)" width="800" /><img src="./Images/Flowchart_Images/FL03_03.png" alt="User Flow (FL03_03)" width="800" /> <br>
 ***Group organizer - create, invite, match preferences***
 
 <img src="./Images/Flowchart_Images/FL08.png" alt="User Flow (FL08)" width="800" />
