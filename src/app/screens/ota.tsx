@@ -92,10 +92,6 @@ export function OtaSearchScreen() {
     }, 850);
   };
 
-  const quick = isFlight
-    ? ["Paris", "Lisbon", "Rome", "Barcelona"]
-    : ["Paris", "Lisbon", "Rome", "Bali"];
-
   const Icon = VERT_ICON[vertical];
 
   return (
@@ -112,13 +108,6 @@ export function OtaSearchScreen() {
           <div className="field">
             <label>{isFlight ? "To" : "City"}</label>
             <input type="text" value={to} onChange={(e) => setTo(e.target.value)} placeholder={isFlight ? "Arrival city or airport" : "Where are you headed?"} />
-            <div className="rail-inline" style={{ marginTop: 8 }}>
-              {quick.map((q) => (
-                <button key={q} className={`chip${to === q ? " active" : ""}`} onClick={() => setTo(q)}>
-                  {q}
-                </button>
-              ))}
-            </div>
           </div>
 
           <div className="od-grid" style={{ "--od-cols": way === "return" && isFlight ? 2 : 2, "--od-gap": "12px" } as CSSProperties}>
@@ -298,7 +287,7 @@ export function OtaResultsScreen() {
 
         <div className="vstack" style={{ gap: 10, marginTop: 6 }}>
           {sorted.map((o, i) => (
-            <Card key={o.id} className="card-press" style={{ padding: 0, overflow: "hidden" }} onClick={() => go("ota-booking", { vertical, offerId: o.id })}>
+            <Card key={o.id} className="card-press" style={{ padding: 0, overflow: "hidden" }} onClick={() => go("ota-booking", { vertical, offer: o })}>
               <div className="hstack" style={{ gap: 0, alignItems: "stretch" }}>
                 {o.photo ? (
                   <Photo src={o.photo} ratio="1/1" alt={o.title} className="ota-offer-photo" />
@@ -352,8 +341,8 @@ export function OtaResultsScreen() {
 export function OtaBookingScreen() {
   const { route, back, reset, replace, addOtaBooking, money, t } = useApp();
   const vertical = v(route.params?.vertical);
-  const offerId = String(route.params?.offerId ?? "");
-  const offer = offerById(offerId);
+  const offerParam = route.params?.offer;
+  const offer = offerParam as OtaOffer | undefined;
   const [stage, setStage] = useState<"review" | "processing" | "done">("review");
   const [ref] = useState(() => "AER-" + Math.floor(1000 + Math.random() * 9000));
 
@@ -452,7 +441,7 @@ export function OtaBookingScreen() {
               {related.map((r) => {
                 const RIcon = VERT_ICON[r.vertical];
                 return (
-                  <Card key={r.id} className="card-press" style={{ padding: 12 }} onClick={() => replace("ota-booking", { vertical: r.vertical, offerId: r.id })}>
+                  <Card key={r.id} className="card-press" style={{ padding: 12 }} onClick={() => replace("ota-booking", { vertical: r.vertical, offer: r })}>
                     <div className="hstack" style={{ gap: 12 }}>
                       {r.photo ? (
                         <Photo src={r.photo} ratio="1/1" alt={r.title} className="ota-thumb" />

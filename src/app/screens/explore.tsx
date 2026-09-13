@@ -161,7 +161,7 @@ function CheapestDeals() {
               style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, overflow: "hidden", flex: "0 0 280px" }}
               onClick={() => {
                 if (stRef.current.suppress) return;
-                go("ota-booking", { vertical: d.vertical, offerId: d.id });
+                go("ota-booking", { vertical: d.vertical, offer: d });
               }}
             >
               <div className="deal-media">

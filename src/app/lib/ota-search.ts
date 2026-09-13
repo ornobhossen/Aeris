@@ -81,6 +81,28 @@ export async function getCountryInfo(code: string) {
 
 /* ──────────────── Flight Search (AviationStack) ──────────────── */
 
+const AIRLINE_LOGOS: Record<string, string> = {
+  "EasyJet": "https://images.kiwi.com/airlines/64/U2.png",
+  "Ryanair": "https://images.kiwi.com/airlines/64/FR.png",
+  "British Airways": "https://images.kiwi.com/airlines/64/BA.png",
+  "Air France": "https://images.kiwi.com/airlines/64/AF.png",
+  "Lufthansa": "https://images.kiwi.com/airlines/64/LH.png",
+  "KLM": "https://images.kiwi.com/airlines/64/KL.png",
+  "Vueling": "https://images.kiwi.com/airlines/64/VY.png",
+  "Wizz Air": "https://images.kiwi.com/airlines/64/W6.png",
+  "Turkish Airlines": "https://images.kiwi.com/airlines/64/TK.png",
+  "Emirates": "https://images.kiwi.com/airlines/64/EK.png",
+  "Qatar Airways": "https://images.kiwi.com/airlines/64/QR.png",
+  "Singapore Airlines": "https://images.kiwi.com/airlines/64/SQ.png",
+  "American Airlines": "https://images.kiwi.com/airlines/64/AA.png",
+  "Delta": "https://images.kiwi.com/airlines/64/DL.png",
+  "United": "https://images.kiwi.com/airlines/64/UA.png",
+};
+
+function getAirlineLogo(name: string): string {
+  return AIRLINE_LOGOS[name] || "https://images.kiwi.com/airlines/64/BA.png";
+}
+
 export async function searchFlights(params: SearchParams): Promise<OtaOffer[]> {
   const apiKey = process.env.AVIATIONSTACK_KEY || "DEMO_KEY";
   if (apiKey === "DEMO_KEY") return generateMockFlights(params);
@@ -96,28 +118,31 @@ export async function searchFlights(params: SearchParams): Promise<OtaOffer[]> {
     if (!res.ok) return generateMockFlights(params);
 
     const data = await res.json();
-    return (data.data || []).slice(0, 8).map((f: any, i: number) => ({
-      id: `flight-${f.flight?.iata || i}`,
-      vertical: "flights" as const,
-      provider: f.airline?.name || "Airline",
-      title: `${f.airline?.name || "Flight"} ${f.flight?.iata || ""}`,
-      subtitle: `${fromLoc?.name || "Various"} → ${dest.name}`,
-      price: String(Math.floor(Math.random() * 300) + 50),
-      priceNote: "/person",
-      rating: Number((Math.random() * 2 + 7).toFixed(1)),
-      reviews: Math.floor(Math.random() * 2000) + 500,
-      tags: [f.flight?.iata ? `Flight ${f.flight.iata}` : "Direct", "Economy"],
-      photo: "/images/plane-a320.jpg",
-      photoRatio: "3/2",
-      description: `Flight from ${fromLoc?.name || "your city"} to ${dest.name}, ${dest.country}.`,
-      conditions: ["Carry-on included", "Checked bag extra", "Free cancellation 24h"],
-      meta: {
-        dep: f.departure?.scheduled || "TBD",
-        arr: f.arrival?.scheduled || "TBD",
-        duration: "TBD",
-        aircraft: f.aircraft?.iata || "TBD",
-      },
-    }));
+    return (data.data || []).slice(0, 8).map((f: any, i: number) => {
+      const airlineName = f.airline?.name || "Airline";
+      return {
+        id: `flight-${f.flight?.iata || i}`,
+        vertical: "flights" as const,
+        provider: airlineName,
+        title: `${airlineName} ${f.flight?.iata || ""}`,
+        subtitle: `${fromLoc?.name || "Various"} → ${dest.name}`,
+        price: String(Math.floor(Math.random() * 300) + 50),
+        priceNote: "/person",
+        rating: Number((Math.random() * 2 + 7).toFixed(1)),
+        reviews: Math.floor(Math.random() * 2000) + 500,
+        tags: [f.flight?.iata ? `Flight ${f.flight.iata}` : "Direct", "Economy"],
+        photo: getAirlineLogo(airlineName),
+        photoRatio: "1/1",
+        description: `Flight from ${fromLoc?.name || "your city"} to ${dest.name}, ${dest.country}.`,
+        conditions: ["Carry-on included", "Checked bag extra", "Free cancellation 24h"],
+        meta: {
+          dep: f.departure?.scheduled || "TBD",
+          arr: f.arrival?.scheduled || "TBD",
+          duration: "TBD",
+          aircraft: f.aircraft?.iata || "TBD",
+        },
+      };
+    });
   } catch {
     return generateMockFlights(params);
   }
@@ -129,14 +154,14 @@ function generateMockFlights(params: SearchParams): OtaOffer[] {
   const dest = params.destination;
   const from = params.from || "London";
   const airlines = [
-    { name: "EasyJet", code: "U2", budget: true },
-    { name: "Ryanair", code: "FR", budget: true },
-    { name: "British Airways", code: "BA", budget: false },
-    { name: "Air France", code: "AF", budget: false },
-    { name: "Lufthansa", code: "LH", budget: false },
-    { name: "KLM", code: "KL", budget: false },
-    { name: "Vueling", code: "VY", budget: true },
-    { name: "Wizz Air", code: "W6", budget: true },
+    { name: "EasyJet", code: "U2", budget: true, logo: "https://images.kiwi.com/airlines/64/U2.png" },
+    { name: "Ryanair", code: "FR", budget: true, logo: "https://images.kiwi.com/airlines/64/FR.png" },
+    { name: "British Airways", code: "BA", budget: false, logo: "https://images.kiwi.com/airlines/64/BA.png" },
+    { name: "Air France", code: "AF", budget: false, logo: "https://images.kiwi.com/airlines/64/AF.png" },
+    { name: "Lufthansa", code: "LH", budget: false, logo: "https://images.kiwi.com/airlines/64/LH.png" },
+    { name: "KLM", code: "KL", budget: false, logo: "https://images.kiwi.com/airlines/64/KL.png" },
+    { name: "Vueling", code: "VY", budget: true, logo: "https://images.kiwi.com/airlines/64/VY.png" },
+    { name: "Wizz Air", code: "W6", budget: true, logo: "https://images.kiwi.com/airlines/64/W6.png" },
   ];
 
   return airlines.slice(0, 6).map((a, i) => {
@@ -157,8 +182,8 @@ function generateMockFlights(params: SearchParams): OtaOffer[] {
       rating: Number((7.5 + Math.random() * 2).toFixed(1)),
       reviews: Math.floor(Math.random() * 3000) + 500,
       tags: a.budget ? ["Budget", "Carry-on only"] : ["Full service", "23kg bag"],
-      photo: "/images/plane-a320.jpg",
-      photoRatio: "3/2",
+      photo: a.logo,
+      photoRatio: "1/1",
       description: `${a.name} flight from ${from} to ${dest}. ${a.budget ? "Low-cost carrier with carry-on only." : "Full service airline with checked baggage."}`,
       conditions: a.budget ? ["No free changes", "Carry-on only (10kg)", "Non-refundable"] : ["Free changes until 24h before", "23kg checked bag", "Meal included"],
       meta: {
