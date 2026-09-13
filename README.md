@@ -40,7 +40,7 @@ The product brief we converged on names of 5 broad solution directions, ranked f
 | **Personalised AI Travel Companion** (Chosen) | Kept as an optional layer on top of Idea 1, which is the profile, budget and calendar-informed suggestions and a draft itinerary.&nbsp; |
 | **Collaborative Group Travel Planner** (Chosen)&nbsp; | Kept to remove the specific "chat-thread + spreadsheet" coordination tax that group organisers face: private preference submission, an overlap engine, and hidden voting instead of a poll no one answers.&nbsp; |
 | **Adaptive Trip Management** (Chosen)&nbsp; | Kept because a confirmed itinerary that silently breaks on a real-world disruption (delay, cancellation, closure, weather) is a worse experience than no automation at all; changes must be ranked, reviewed and approved, never applied automatically.&nbsp; |
-| **Language and Local Guide Companion** (Not Chosen)&nbsp; | Dropped because Google Translate and other apps has covered these features and users do not need to use our app for translation in real time while they can use the other app which is much more efficient than this app.&nbsp; |
+| **Language and Local Guide Companion** (Not Chosen)&nbsp; | Dropped because Google Translation and other apps have covered these features and users do not need to use our app for translation in real time when they can use other apps which is much more efficient than this app.&nbsp; |
 
 ### 🗺️ **2.2 Ideation Boards**
 
@@ -131,7 +131,6 @@ The prototype is built as a Next.js app with one screen component per flow-map e
 |  | - Sentry (Error Monitoring)&nbsp; | Catches production errors with stack traces and user context but 14-day retention and 50KB bundle overhead. |
 |  | - Expo Push Notifications (Mobile — future)&nbsp; | One API pushes to both iOS and Android. Constraints: $99/year Apple dev program and we can't test on web. |
 
-&nbsp;
 
 **System Overview**
 
