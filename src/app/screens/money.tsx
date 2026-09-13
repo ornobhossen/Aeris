@@ -16,9 +16,13 @@ import {
 /* ──────────────── Budget ──────────────── */
 
 export function BudgetScreen() {
-  const { trip, back, go, money, t } = useApp();
+  const { trip, back, go, money, t, notify, patchTrip } = useApp();
   const remaining = Number(String(trip.budget.remaining).replace(/\D/g, "")) || 0;
   const alternatives = trip.alerts.flatMap((a) => a.alternatives ?? []).slice(0, 3);
+
+  const handleAddExpense = () => {
+    notify("Add expense form (prototype)");
+  };
 
   return (
     <Shell
@@ -26,7 +30,7 @@ export function BudgetScreen() {
       sub={trip.mode === "group" ? t("money.shared") : t("money.personal")}
       onBack={back}
     >
-      <div className="content">
+      <div className="content" style={{ paddingBottom: 100 }}>
         <Card className="card-hero" style={{ padding: 18 }}>
           <div className="spread">
             <div>
@@ -76,6 +80,50 @@ export function BudgetScreen() {
             })}
           </div>
         </SectionT>
+
+        {trip.expenses.length > 0 && (
+          <SectionT title={t("money.expenses")}>
+            <Card style={{ padding: 0 }}>
+              {trip.expenses.map((e) => {
+                const payer = trip.travellers.find((t) => t.id === e.paidBy);
+                const Icon = iconMap[e.icon] ?? iconMap.receipt;
+                return (
+                  <div key={e.id} className="expense-row" style={{ paddingInline: 16 }}>
+                    <div className="expense-icon">
+                      <Icon />
+                    </div>
+                    <div className="expense-detail">
+                      <h4>{e.name}</h4>
+                      <p>
+                        {e.date} - {trip.mode === "group" ? `paid by ${payer?.name ?? "?"} - ${e.split}` : "personal"}
+                      </p>
+                      <div className="hstack" style={{ gap: 6, flexWrap: "wrap" }}>
+                        {trip.mode === "group" && <Badge tone="outline">{e.split} split</Badge>}
+                        {e.rateSource === "cached" && (
+                          <Badge tone="warn">
+                            <IconRefresh size={10} /> last cached rate
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                    <div className="expense-amount">
+                      <div className="primary">{money(e.baseAmount)}</div>
+                      <div className="secondary">
+                        {e.originalCurrency !== "EUR" && e.originalAmount
+                          ? `= ${e.originalAmount} ${e.originalCurrency}`
+                          : `1.0000 ${e.originalCurrency ?? "EUR"}`}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </Card>
+          </SectionT>
+        )}
+
+        <button className="btn btn-secondary btn-full" style={{ marginTop: 12 }} onClick={handleAddExpense}>
+          <IconPlus size={15} /> {t("money.addExpense")}
+        </button>
 
         {alternatives.length > 0 && (
           <SectionT title="Alternatives ranked vs your remaining budget">

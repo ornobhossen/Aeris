@@ -400,6 +400,8 @@ const MESSAGES: Dict = {
   "money.cap": { en: "cap {p}", es: "tope {p}", fr: "plafond {p}" },
   "money.overCap": { en: "Over cap", es: "Supera el tope", fr: "Plafond dépassé" },
   "money.nearCap": { en: "Near cap", es: "Cerca del tope", fr: "Près du plafond" },
+  "money.expenses": { en: "Expenses", es: "Gastos", fr: "Dépenses" },
+  "money.addExpense": { en: "Add expense", es: "Añadir gasto", fr: "Ajouter une dépense" },
 
   /* ── compare / suggestions ──────────────────── */
   "compare.twoTracks": { en: "Two tracks, one list", es: "Dos rutas, una lista", fr: "Deux parcours, une liste" },

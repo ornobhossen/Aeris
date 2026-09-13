@@ -244,7 +244,7 @@ export function MapScreen() {
         </div>
       </div>
 
-      <div className="section">
+      <div className="section" style={{ paddingBottom: 100 }}>
         {mode === "group" && block && (
           <Card className="card-teal" style={{ marginBottom: 4 }}>
             <div style={{ fontSize: 14, fontWeight: 650 }}>Schedule overlap, named blockers</div>
