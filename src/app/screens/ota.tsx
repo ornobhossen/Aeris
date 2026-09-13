@@ -481,11 +481,14 @@ export function OtaBookingScreen() {
     );
   }
 
-  return (
+  const displayPhoto = offer.vertical === "flights" && offer.planePhoto ? offer.planePhoto : offer.photo;
+    const displayRatio = offer.vertical === "flights" && offer.planePhoto ? "4/3" : (offer.photoRatio ?? "16/9");
+
+    return (
     <Shell title={`${Title} · details`} sub={offer.title} onBack={back}>
       <div className="content">
-        {offer.photo ? (
-          <Photo src={offer.photo} ratio={offer.photoRatio} alt={offer.title} />
+        {displayPhoto ? (
+          <Photo src={displayPhoto} ratio={displayRatio} alt={offer.title} />
         ) : (
           <div className="ota-hero">
             <Icon size={30} />

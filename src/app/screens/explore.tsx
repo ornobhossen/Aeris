@@ -230,6 +230,23 @@ export function ExploreScreen() {
   const seed = last ? relatedFor(last.vertical) : relatedFor("flights");
   const first = tripList[0];
 
+  const [searchDest, setSearchDest] = useState("");
+  const [searchDateA, setSearchDateA] = useState("Fri 25 Sep");
+  const [searchDateB, setSearchDateB] = useState("Sun 27 Sep");
+  const [searchTrav, setSearchTrav] = useState("2");
+  const [searchWay, setSearchWay] = useState<"return" | "oneway">("return");
+
+  const handleSearch = (vertical: Vertical) => {
+    if (!searchDest.trim()) return;
+    go("ota-results", {
+      vertical,
+      destination: searchDest,
+      from: "London",
+      dates: searchWay === "return" ? `${searchDateA} - ${searchDateB}` : searchDateA,
+      way: searchWay,
+    });
+  };
+
   return (
     <Shell
       header={
@@ -257,14 +274,56 @@ export function ExploreScreen() {
     >
       <div className="screen-scroll" style={{ flex: 1 }}>
         <div className="content" style={{ paddingTop: 8 }}>
-          <button className="search-hero" onClick={() => go("ota-search", { vertical: "flights" })}>
-            <IconSearch size={20} />
-            <span className="search-hero-main">{t("explore.searchPh")}</span>
-            <span className="search-hero-sub">
-              <IconCalendar size={14} /> 25 Sep - 27 Sep · {t("explore.travellers", { n: 2 })}
-            </span>
-            <IconArrowRight size={18} />
-          </button>
+          <Card className="search-hero-card" style={{ padding: 16 }}>
+            <div className="vstack" style={{ gap: 12 }}>
+              <div className="hstack" style={{ gap: 8, alignItems: "flex-end" }}>
+                <div style={{ flex: 1 }}>
+                  <label className="small muted" style={{ display: "block", marginBottom: 4 }}>{t("explore.whereTo")}</label>
+                  <input
+                    type="text"
+                    value={searchDest}
+                    onChange={(e) => setSearchDest(e.target.value)}
+                    placeholder={t("explore.whereToPh")}
+                    style={{ width: "100%", padding: "12px 14px", fontSize: 16, borderRadius: 10, border: "1px solid var(--border)", background: "var(--surface)", outline: "none" }}
+                  />
+                </div>
+                <button
+                  className="btn btn-primary"
+                  style={{ height: 48, padding: "0 20px", flex: "none" }}
+                  onClick={() => handleSearch("flights")}
+                  disabled={!searchDest.trim()}
+                >
+                  <IconSearch size={18} /> {t("explore.searchBtn")}
+                </button>
+              </div>
+
+              <div className="od-grid" style={{ "--od-cols": 4, "--od-gap": "10px" } as CSSProperties}>
+                <div className="field" style={{ margin: 0 }}>
+                  <label>{t("explore.depart")}</label>
+                  <input type="text" value={searchDateA} onChange={(e) => setSearchDateA(e.target.value)} style={{ width: "100%" }} />
+                </div>
+                <div className="field" style={{ margin: 0 }}>
+                  <label>{t("explore.return")}</label>
+                  <input type="text" value={searchDateB} onChange={(e) => setSearchDateB(e.target.value)} style={{ width: "100%", opacity: searchWay === "return" ? 1 : 0.5 }} disabled={searchWay === "oneway"} />
+                </div>
+                <div className="field" style={{ margin: 0 }}>
+                  <label>{t("explore.travellersLabel")}</label>
+                  <input type="text" inputMode="numeric" value={searchTrav} onChange={(e) => setSearchTrav(e.target.value.replace(/\D/g, ""))} style={{ width: "100%" }} />
+                </div>
+                <div className="field" style={{ margin: 0 }}>
+                  <label>{t("explore.tripType")}</label>
+                  <div className="seg" style={{ width: "100%" }}>
+                    <button className={`seg-btn${searchWay === "return" ? " active" : ""}`} onClick={() => setSearchWay("return")} style={{ flex: 1 }}>
+                      {t("explore.returnTrip")}
+                    </button>
+                    <button className={`seg-btn${searchWay === "oneway" ? " active" : ""}`} onClick={() => setSearchWay("oneway")} style={{ flex: 1 }}>
+                      {t("explore.oneWay")}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
 
           <div className="ota-grid">
             {VERTICALS.map((v) => {

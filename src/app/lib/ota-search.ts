@@ -32,6 +32,7 @@ export interface OtaOffer {
   tags: string[];
   photo?: string;
   photoRatio?: string;
+  planePhoto?: string;
   description: string;
   conditions: string[];
   meta: Record<string, string>;
@@ -103,6 +104,28 @@ function getAirlineLogo(name: string): string {
   return AIRLINE_LOGOS[name] || "https://images.kiwi.com/airlines/64/BA.png";
 }
 
+const AIRLINE_PLANES: Record<string, string> = {
+  "EasyJet": "https://images.kiwi.com/aircraft/64/A320.png",
+  "Ryanair": "https://images.kiwi.com/aircraft/64/B738.png",
+  "British Airways": "https://images.kiwi.com/aircraft/64/A320.png",
+  "Air France": "https://images.kiwi.com/aircraft/64/A320.png",
+  "Lufthansa": "https://images.kiwi.com/aircraft/64/A320.png",
+  "KLM": "https://images.kiwi.com/aircraft/64/B738.png",
+  "Vueling": "https://images.kiwi.com/aircraft/64/A320.png",
+  "Wizz Air": "https://images.kiwi.com/aircraft/64/A320.png",
+  "Turkish Airlines": "https://images.kiwi.com/aircraft/64/A330.png",
+  "Emirates": "https://images.kiwi.com/aircraft/64/B777.png",
+  "Qatar Airways": "https://images.kiwi.com/aircraft/64/A350.png",
+  "Singapore Airlines": "https://images.kiwi.com/aircraft/64/A350.png",
+  "American Airlines": "https://images.kiwi.com/aircraft/64/B738.png",
+  "Delta": "https://images.kiwi.com/aircraft/64/B738.png",
+  "United": "https://images.kiwi.com/aircraft/64/B738.png",
+};
+
+function getAirlinePlane(name: string): string {
+  return AIRLINE_PLANES[name] || "https://images.kiwi.com/aircraft/64/A320.png";
+}
+
 export async function searchFlights(params: SearchParams): Promise<OtaOffer[]> {
   const apiKey = process.env.AVIATIONSTACK_KEY || "DEMO_KEY";
   if (apiKey === "DEMO_KEY") return generateMockFlights(params);
@@ -133,6 +156,7 @@ export async function searchFlights(params: SearchParams): Promise<OtaOffer[]> {
         tags: [f.flight?.iata ? `Flight ${f.flight.iata}` : "Direct", "Economy"],
         photo: getAirlineLogo(airlineName),
         photoRatio: "1/1",
+        planePhoto: getAirlinePlane(airlineName),
         description: `Flight from ${fromLoc?.name || "your city"} to ${dest.name}, ${dest.country}.`,
         conditions: ["Carry-on included", "Checked bag extra", "Free cancellation 24h"],
         meta: {
@@ -184,6 +208,7 @@ function generateMockFlights(params: SearchParams): OtaOffer[] {
       tags: a.budget ? ["Budget", "Carry-on only"] : ["Full service", "23kg bag"],
       photo: a.logo,
       photoRatio: "1/1",
+      planePhoto: getAirlinePlane(a.name),
       description: `${a.name} flight from ${from} to ${dest}. ${a.budget ? "Low-cost carrier with carry-on only." : "Full service airline with checked baggage."}`,
       conditions: a.budget ? ["No free changes", "Carry-on only (10kg)", "Non-refundable"] : ["Free changes until 24h before", "23kg checked bag", "Meal included"],
       meta: {

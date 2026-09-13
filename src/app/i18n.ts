@@ -355,6 +355,15 @@ const MESSAGES: Dict = {
   "explore.crossSell": { en: "Cross-sell", es: "Venta cruzada", fr: "Vente croisée" },
   "explore.continue": { en: "Continue planning", es: "Continuar la planificación", fr: "Continuer la planification" },
   "explore.allTrips": { en: "All trips", es: "Todos los viajes", fr: "Tous les voyages" },
+  "explore.whereTo": { en: "Where to?", es: "¿A dónde?", fr: "Où ?" },
+  "explore.whereToPh": { en: "Type a city or country…", es: "Escribe una ciudad o país…", fr: "Tapez une ville ou un pays…" },
+  "explore.searchBtn": { en: "Search flights", es: "Buscar vuelos", fr: "Rechercher vols" },
+  "explore.depart": { en: "Depart", es: "Salida", fr: "Départ" },
+  "explore.return": { en: "Return", es: "Regreso", fr: "Retour" },
+  "explore.travellersLabel": { en: "Travellers", es: "Viajeros", fr: "Voyageurs" },
+  "explore.tripType": { en: "Trip type", es: "Tipo de viaje", fr: "Type de voyage" },
+  "explore.returnTrip": { en: "Return", es: "Ida y vuelta", fr: "Aller-retour" },
+  "explore.oneWay": { en: "One way", es: "Solo ida", fr: "Aller simple" },
 
   /* ── trip dashboard ──────────────────────── */
   "trip.backToTrips": { en: "Back to trips", es: "Volver a viajes", fr: "Retour aux voyages" },

@@ -1267,6 +1267,7 @@ export interface OtaOffer {
   tags: string[];
   photo?: string;
   photoRatio?: string;
+  planePhoto?: string;
   description: string;
   conditions: string[];
   meta: Record<string, string>;
