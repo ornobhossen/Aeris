@@ -24,6 +24,8 @@ import {
 } from "../icons";
 import { searchOffers, SearchParams } from "../lib/ota-search";
 
+const AIRLINE_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aa0a6' stroke-width='1.5'%3E%3Cpath d='M17.8 10.5l-1.5-1c-.4-.3-1.1-.3-1.5 0L6 14.5v3.5a1.5 1.5 0 0 1-3 0V5a3 3 0 0 1 5.67-1.72L16 5l3-3L17 1z'/%3E%3Cpath d='M10 11h4'/%3E%3C/svg%3E";
+
 const VERT_TITLE: Record<Vertical, string> = {
   flights: "Flights",
   hotels: "Hotels",
@@ -230,8 +232,6 @@ export function OtaSearchScreen() {
     </>
   );
 }
-
-const AIRLINE_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aa0a6' stroke-width='1.5'%3E%3Cpath d='M17.8 10.5l-1.5-1c-.4-.3-1.1-.3-1.5 0L6 14.5v3.5a1.5 1.5 0 0 1-3 0V5a3 3 0 0 1 5.67-1.72L16 5l3-3L17 1z'/%3E%3Cpath d='M10 11h4'/%3E%3C/svg%3E";
 
 /* ──────────────── Results ──────────────── */
 
