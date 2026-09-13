@@ -72,7 +72,17 @@ export function OtaSearchScreen() {
   const { go, back, route } = useApp();
   const vertical = v(route.params?.vertical);
   const isFlight = vertical === "flights";
-  const formatDate = (d: Date) => d.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+  const fmt = (d: Date) => d.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+  const toISO = (d: Date) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
+  const fromISO = (iso: string) => {
+    const d = new Date(`${iso}T00:00:00`);
+    return Number.isNaN(d.getTime()) ? iso : fmt(d);
+  };
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 2);
@@ -82,8 +92,8 @@ export function OtaSearchScreen() {
   const [to, setTo] = useState(typeof route.params?.destination === "string" ? String(route.params.destination) : isFlight ? "Paris" : "Paris");
   const [from, setFrom] = useState("London");
   const [way, setWay] = useState<"return" | "oneway">("return");
-  const [dateA, setDateA] = useState(formatDate(today));
-  const [dateB, setDateB] = useState(formatDate(tomorrow));
+  const [dateA, setDateA] = useState(toISO(today));
+  const [dateB, setDateB] = useState(toISO(tomorrow));
   const [trav, setTrav] = useState("2");
   const [loading, setLoading] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState<"depart" | "return" | null>(null);
@@ -95,7 +105,7 @@ export function OtaSearchScreen() {
       go(screen, {
         vertical,
         destination: to,
-        dates: way === "return" ? `${dateA} - ${dateB}` : dateA,
+        dates: way === "return" ? `${fromISO(dateA)} - ${fromISO(dateB)}` : fromISO(dateA),
         from,
         way,
         ...extra,
@@ -140,12 +150,12 @@ export function OtaSearchScreen() {
             </div>
 
             <div className="od-grid" style={{ "--od-cols": way === "return" && isFlight ? 2 : 2, "--od-gap": "12px" } as CSSProperties}>
-              <div className="field">
+              <div className="field" style={{ margin: 0 }}>
                 <label>{isFlight ? "Depart" : "Check-in"}</label>
                 <div className="field-input-wrapper">
                   <input
                     type="text"
-                    value={dateA}
+                    value={fromISO(dateA)}
                     readOnly
                     onClick={() => openCalendar("depart")}
                     style={{ width: "100%", cursor: "pointer" }}
@@ -154,12 +164,12 @@ export function OtaSearchScreen() {
                 </div>
               </div>
               {(way === "return" || !isFlight) && (
-                <div className="field">
+                <div className="field" style={{ margin: 0 }}>
                   <label>{isFlight ? "Return" : "Check-out"}</label>
                   <div className="field-input-wrapper">
                     <input
                       type="text"
-                      value={dateB}
+                      value={fromISO(dateB)}
                       readOnly
                       onClick={() => openCalendar("return")}
                       style={{ width: "100%", cursor: way === "return" ? "pointer" : "not-allowed", opacity: way === "return" ? 1 : 0.5 }}

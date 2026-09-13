@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconChevronRight } from "../icons";
 
 interface CalendarModalProps {
@@ -20,14 +20,19 @@ export function CalendarModal({
   onSelect,
   minDate,
 }: CalendarModalProps) {
-  if (!isOpen) return null;
-
-  const [viewDate, setViewDate] = useState(() => {
-    const d = selectedDate ? new Date(selectedDate) : new Date();
-    return new Date(d.getFullYear(), d.getMonth(), 1);
-  });
+  const [viewDate, setViewDate] = useState(() => new Date());
   const [showMonthPicker, setShowMonthPicker] = useState(false);
   const [showYearPicker, setShowYearPicker] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const d = selectedDate ? new Date(selectedDate) : new Date();
+    if (!Number.isNaN(d.getTime())) {
+      setViewDate(new Date(d.getFullYear(), d.getMonth(), 1));
+    }
+  }, [isOpen, selectedDate]);
+
+  if (!isOpen) return null;
 
   const daysInMonth = (date: Date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   const firstDayOfMonth = (date: Date) => new Date(date.getFullYear(), date.getMonth(), 1).getDay();
@@ -63,9 +68,12 @@ export function CalendarModal({
           <button className="calendar-nav-btn" onClick={prevMonth} aria-label="Previous month">
             <IconChevronRight size={20} style={{ transform: "rotate(180deg)" }} />
           </button>
-          <div className="calendar-month-year-wrapper" onClick={() => setShowMonthPicker(true)}>
-            <span className="calendar-month-year">
-              {monthNames[viewDate.getMonth()]} {viewDate.getFullYear()}
+          <div className="calendar-month-year-wrapper">
+            <span className="calendar-month-year" onClick={() => setShowMonthPicker(true)}>
+              {monthNames[viewDate.getMonth()]}
+            </span>
+            <span className="calendar-month-year" onClick={() => setShowYearPicker(true)}>
+              {viewDate.getFullYear()}
             </span>
             <IconChevronRight size={14} style={{ marginLeft: 6, transform: "rotate(90deg)", color: "var(--muted)" }} />
           </div>

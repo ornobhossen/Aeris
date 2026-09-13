@@ -231,7 +231,17 @@ export function ExploreScreen() {
   const seed = last ? relatedFor(last.vertical) : relatedFor("flights");
   const first = tripList[0];
 
-  const formatDate = (d: Date) => d.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+  const fmt = (d: Date) => d.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+  const toISO = (d: Date) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
+  const fromISO = (iso: string) => {
+    const d = new Date(`${iso}T00:00:00`);
+    return Number.isNaN(d.getTime()) ? iso : fmt(d);
+  };
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 2);
@@ -239,8 +249,8 @@ export function ExploreScreen() {
   dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 4);
 
   const [searchDest, setSearchDest] = useState("");
-  const [searchDateA, setSearchDateA] = useState(formatDate(today));
-  const [searchDateB, setSearchDateB] = useState(formatDate(tomorrow));
+  const [searchDateA, setSearchDateA] = useState(toISO(today));
+  const [searchDateB, setSearchDateB] = useState(toISO(tomorrow));
   const [searchTrav, setSearchTrav] = useState("2");
   const [searchWay, setSearchWay] = useState<"return" | "oneway">("return");
   const [calendarOpen, setCalendarOpen] = useState<"depart" | "return" | null>(null);
@@ -251,7 +261,7 @@ export function ExploreScreen() {
       vertical,
       destination: searchDest,
       from: "London",
-      dates: searchWay === "return" ? `${searchDateA} - ${searchDateB}` : searchDateA,
+      dates: searchWay === "return" ? `${fromISO(searchDateA)} - ${fromISO(searchDateB)}` : fromISO(searchDateA),
       way: searchWay,
     });
   };
@@ -330,7 +340,7 @@ export function ExploreScreen() {
                     <div className="field-input-wrapper">
                       <input
                         type="text"
-                        value={searchDateA}
+                        value={fromISO(searchDateA)}
                         readOnly
                         onClick={() => openCalendar("depart")}
                         style={{ width: "100%", cursor: "pointer" }}
@@ -343,7 +353,7 @@ export function ExploreScreen() {
                     <div className="field-input-wrapper">
                       <input
                         type="text"
-                        value={searchDateB}
+                        value={fromISO(searchDateB)}
                         readOnly
                         onClick={() => openCalendar("return")}
                         style={{ width: "100%", cursor: searchWay === "return" ? "pointer" : "not-allowed", opacity: searchWay === "return" ? 1 : 0.5 }}
