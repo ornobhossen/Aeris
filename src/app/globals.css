@@ -1437,3 +1437,336 @@ body {
     transform: translate3d(-50%, 0, 0);
   }
 }
+
+/* ────────────────────────── Calendar Modal ────────────────────────── */
+.calendar-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: var(--phone-safe-bottom, 0);
+  animation: fadeIn 0.15s ease-out;
+}
+
+.calendar-modal {
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.25s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.calendar-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-soft);
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 1;
+  border-radius: 20px 20px 0 0;
+}
+
+.calendar-modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.calendar-modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--border-soft);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--muted);
+  transition: background 0.15s, color 0.15s;
+}
+
+.calendar-modal-close:hover {
+  background: var(--border);
+  color: var(--fg);
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  gap: 12px;
+}
+
+.calendar-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--border-soft);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--fg);
+  transition: background 0.15s;
+}
+
+.calendar-nav-btn:hover {
+  background: var(--border);
+}
+
+.calendar-nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.calendar-month-year {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg);
+  text-align: center;
+  flex: 1;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  padding: 0 16px 16px;
+}
+
+.calendar-day-header {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 8px 0;
+  text-transform: uppercase;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+
+.calendar-day:hover:not(.disabled):not(.selected) {
+  background: var(--border-soft);
+}
+
+.calendar-day.selected {
+  background: var(--accent);
+  color: var(--accent-on);
+  font-weight: 600;
+}
+
+.calendar-day.today:not(.selected) {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.calendar-day.disabled {
+  color: var(--meta);
+  cursor: not-allowed;
+}
+
+.calendar-day.range-start {
+  border-radius: 10px 0 0 10px;
+}
+
+.calendar-day.range-end {
+  border-radius: 0 10px 10px 0;
+}
+
+.calendar-day.in-range {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 0;
+}
+
+.calendar-modal-actions {
+  display: flex;
+  gap: 10px;
+  padding: 12px 20px 20px;
+  border-top: 1px solid var(--border-soft);
+  justify-content: flex-end;
+}
+
+.calendar-modal-actions button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.calendar-btn-cancel {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
+
+.calendar-btn-cancel:hover {
+  background: var(--border-soft);
+}
+
+.calendar-btn-apply {
+  background: var(--accent);
+  color: var(--accent-on);
+  border: none;
+}
+
+.calendar-btn-apply:hover {
+  background: var(--accent-hover);
+}
+
+.calendar-btn-apply:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Radio button styles for trip type */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+
+.radio-option:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.radio-option:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  box-shadow: 0 0 0 2px var(--accent-bg);
+}
+
+.radio-option input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+}
+
+.radio-option input[type="radio"]:checked {
+  border-color: var(--accent);
+}
+
+.radio-option input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.radio-option input[type="radio"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.radio-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg);
+  cursor: pointer;
+  flex: 1;
+}
+
+.field-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.field-input-wrapper input {
+  width: 100%;
+  padding: 12px 14px;
+  padding-right: 44px;
+  font-size: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--fg);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.field-input-wrapper input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.field-input-wrapper input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--surface-warm);
+}
+
+.field-input-wrapper .calendar-trigger {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  pointer-events: none;
+}

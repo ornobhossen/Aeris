@@ -356,7 +356,7 @@ const MESSAGES: Dict = {
   "explore.continue": { en: "Continue planning", es: "Continuar la planificación", fr: "Continuer la planification" },
   "explore.allTrips": { en: "All trips", es: "Todos los viajes", fr: "Tous les voyages" },
   "explore.whereTo": { en: "Where to?", es: "¿A dónde?", fr: "Où ?" },
-  "explore.whereToPh": { en: "Type a city or country…", es: "Escribe una ciudad o país…", fr: "Tapez une ville ou un pays…" },
+  "explore.whereToPh": { en: "Type a country…", es: "Escribe un país…", fr: "Tapez un pays…" },
   "explore.searchBtn": { en: "Search flights", es: "Buscar vuelos", fr: "Rechercher vols" },
   "explore.depart": { en: "Depart", es: "Salida", fr: "Départ" },
   "explore.return": { en: "Return", es: "Regreso", fr: "Retour" },

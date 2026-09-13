@@ -5,6 +5,7 @@ import type { OtaOffer, Vertical } from "../data";
 import { OTA_OFFERS } from "../data";
 import { useApp } from "../store";
 import { Shell, Card, Badge, Photo } from "../ui";
+import { CalendarModal } from "../components/CalendarModal";
 import {
   IconPlane,
   IconHome,
@@ -76,6 +77,7 @@ export function OtaSearchScreen() {
   const [dateB, setDateB] = useState("Sun 27 Sep");
   const [trav, setTrav] = useState("2");
   const [loading, setLoading] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState<"depart" | "return" | null>(null);
 
   const run = (screen: "ota-results" | "ota-booking", extra?: Record<string, unknown>) => {
     setLoading(true);
@@ -92,82 +94,133 @@ export function OtaSearchScreen() {
     }, 850);
   };
 
+  const openCalendar = (which: "depart" | "return") => {
+    setCalendarOpen(which);
+  };
+
+  const closeCalendar = () => {
+    setCalendarOpen(null);
+  };
+
+  const handleDateSelect = (date: string) => {
+    if (calendarOpen === "depart") {
+      setDateA(date);
+    } else if (calendarOpen === "return") {
+      setDateB(date);
+    }
+    closeCalendar();
+  };
+
   const Icon = VERT_ICON[vertical];
 
   return (
-    <Shell title={`Search ${VERT_TITLE[vertical].toLowerCase()}`} sub={isFlight ? "Compare airlines end to end" : `Best ${VERT_TITLE[vertical].toLowerCase()} near your dates`} onBack={back}>
-      <div className="content">
-        <div className="vstack">
-          {isFlight && (
-            <div className="field">
-              <label>From</label>
-              <input type="text" value={from} onChange={(e) => setFrom(e.target.value)} placeholder="Departure city or airport" />
-            </div>
-          )}
-
-          <div className="field">
-            <label>{isFlight ? "To" : "City"}</label>
-            <input type="text" value={to} onChange={(e) => setTo(e.target.value)} placeholder={isFlight ? "Arrival city or airport" : "Where are you headed?"} />
-          </div>
-
-          <div className="od-grid" style={{ "--od-cols": way === "return" && isFlight ? 2 : 2, "--od-gap": "12px" } as CSSProperties}>
-            <div className="field">
-              <label>{isFlight ? "Depart" : "Check-in"}</label>
-              <input type="text" value={dateA} onChange={(e) => setDateA(e.target.value)} />
-            </div>
-            {(way === "return" || !isFlight) && (
+    <>
+      <Shell title={`Search ${VERT_TITLE[vertical].toLowerCase()}`} sub={isFlight ? "Compare airlines end to end" : `Best ${VERT_TITLE[vertical].toLowerCase()} near your dates`} onBack={back}>
+        <div className="content">
+          <div className="vstack">
+            {isFlight && (
               <div className="field">
-                <label>{isFlight ? "Return" : "Check-out"}</label>
-                <input type="text" value={dateB} onChange={(e) => setDateB(e.target.value)} />
+                <label>From</label>
+                <input type="text" value={from} onChange={(e) => setFrom(e.target.value)} placeholder="Departure city or airport" />
               </div>
             )}
-          </div>
 
-          {isFlight && (
             <div className="field">
-              <label>Trip type</label>
-              <div className="seg">
-                <button className={`seg-btn${way === "return" ? " active" : ""}`} onClick={() => setWay("return")}>
-                  <IconCalendar size={14} /> Return
-                </button>
-                <button className={`seg-btn${way === "oneway" ? " active" : ""}`} onClick={() => setWay("oneway")}>
-                  <IconArrowRight size={13} /> One way
-                </button>
-              </div>
+              <label>{isFlight ? "To" : "City"}</label>
+              <input type="text" value={to} onChange={(e) => setTo(e.target.value)} placeholder="type a country" />
             </div>
-          )}
 
-          <div className="field">
-            <label>{isFlight ? "Travellers" : "Guests"}</label>
-            <input type="text" inputMode="numeric" value={trav} onChange={(e) => setTrav(e.target.value.replace(/\D/g, ""))} />
-          </div>
+            <div className="od-grid" style={{ "--od-cols": way === "return" && isFlight ? 2 : 2, "--od-gap": "12px" } as CSSProperties}>
+              <div className="field">
+                <label>{isFlight ? "Depart" : "Check-in"}</label>
+                <div className="field-input-wrapper">
+                  <input
+                    type="text"
+                    value={dateA}
+                    readOnly
+                    onClick={() => openCalendar("depart")}
+                    style={{ width: "100%", cursor: "pointer" }}
+                  />
+                  <IconCalendar size={20} className="calendar-trigger" />
+                </div>
+              </div>
+              {(way === "return" || !isFlight) && (
+                <div className="field">
+                  <label>{isFlight ? "Return" : "Check-out"}</label>
+                  <div className="field-input-wrapper">
+                    <input
+                      type="text"
+                      value={dateB}
+                      readOnly
+                      onClick={() => openCalendar("return")}
+                      style={{ width: "100%", cursor: way === "return" ? "pointer" : "not-allowed", opacity: way === "return" ? 1 : 0.5 }}
+                      disabled={way === "oneway"}
+                    />
+                    <IconCalendar size={20} className="calendar-trigger" />
+                  </div>
+                </div>
+              )}
+            </div>
 
-          <button className="btn btn-primary btn-full" onClick={() => run("ota-results")} disabled={loading || !to.trim()}>
-            {loading ? (
-              <>
-                <IconClock size={15} /> Searching {to || "..."}...
-              </>
-            ) : (
-              <>
-                <IconSearch size={15} /> Search
-              </>
+            {isFlight && (
+              <div className="field">
+                <label>Trip type</label>
+                <div className="radio-group">
+                  <label className="radio-option">
+                    <input type="radio" name="tripType" value="return" checked={way === "return"} onChange={() => setWay("return")} />
+                    <span className="radio-label">Return</span>
+                  </label>
+                  <label className="radio-option">
+                    <input type="radio" name="tripType" value="oneway" checked={way === "oneway"} onChange={() => setWay("oneway")} />
+                    <span className="radio-label">One way</span>
+                  </label>
+                </div>
+              </div>
             )}
-          </button>
 
-          <Card className="card-ai" style={{ marginTop: 12 }}>
-            <div className="hstack" style={{ gap: 10 }}>
-              <Icon size={18} style={{ color: "var(--ai)", flex: "none" }} />
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 650 }}>Aeris cross-search</div>
-                <p className="small muted" style={{ margin: "4px 0 0" }}>
-                  Book this and Aeris will pair it with nearby {vertical === "flights" ? "hotels and rides" : vertical === "hotels" ? "rides and tickets" : vertical === "cars" ? "tickets and stays" : "stays and flights"} in one basket.
-                </p>
-              </div>
+            <div className="field">
+              <label>{isFlight ? "Travellers" : "Guests"}</label>
+              <input type="text" inputMode="numeric" value={trav} onChange={(e) => setTrav(e.target.value.replace(/\D/g, ""))} />
             </div>
-          </Card>
+
+            <button className="btn btn-primary btn-full" onClick={() => run("ota-results")} disabled={loading || !to.trim()}>
+              {loading ? (
+                <>
+                  <IconClock size={15} /> Searching {to || "..."}...
+                </>
+              ) : (
+                <>
+                  <IconSearch size={15} /> Search
+                </>
+              )}
+            </button>
+
+            <Card className="card-ai" style={{ marginTop: 12 }}>
+              <div className="hstack" style={{ gap: 10 }}>
+                <Icon size={18} style={{ color: "var(--ai)", flex: "none" }} />
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 650 }}>Aeris cross-search</div>
+                  <p className="small muted" style={{ margin: "4px 0 0" }}>
+                    Book this and Aeris will pair it with nearby {vertical === "flights" ? "hotels and rides" : vertical === "hotels" ? "rides and tickets" : vertical === "cars" ? "tickets and stays" : "stays and flights"} in one basket.
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
         </div>
-      </div>
-    </Shell>
+      </Shell>
+      <CalendarModal
+        isOpen={!!calendarOpen}
+        onClose={closeCalendar}
+        title={calendarOpen === "depart" ? "Depart" : "Return"}
+        selectedDate={calendarOpen === "depart" ? dateA : dateB}
+        onSelect={(date) => {
+          if (calendarOpen === "depart") setDateA(date);
+          else if (calendarOpen === "return") setDateB(date);
+        }}
+        minDate={calendarOpen === "return" ? dateA : undefined}
+      />
+    </>
   );
 }
 
@@ -482,9 +535,9 @@ export function OtaBookingScreen() {
   }
 
   const displayPhoto = offer.vertical === "flights" && offer.planePhoto ? offer.planePhoto : offer.photo;
-    const displayRatio = offer.vertical === "flights" && offer.planePhoto ? "4/3" : (offer.photoRatio ?? "16/9");
+  const displayRatio = offer.vertical === "flights" && offer.planePhoto ? "4/3" : (offer.photoRatio ?? "16/9");
 
-    return (
+  return (
     <Shell title={`${Title} · details`} sub={offer.title} onBack={back}>
       <div className="content">
         {displayPhoto ? (

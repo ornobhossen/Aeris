@@ -6,6 +6,7 @@ import type { OtaOffer, Vertical } from "../data";
 import { OTA_OFFERS } from "../data";
 import { useApp } from "../store";
 import { Shell, Card, Badge, Photo } from "../ui";
+import { CalendarModal } from "../components/CalendarModal";
 import {
   IconPlane,
   IconHome,
@@ -153,7 +154,7 @@ function CheapestDeals() {
       >
         {[...deals, ...deals].map((d, i) => {
           const Icon = VERT_ICON[d.vertical];
-          const grad = VERTICALS.find(v => v.v === d.vertical)?.grad ?? "var(--accent)";
+          const grad = VERTICALS.find((v) => v.v === d.vertical)?.grad ?? "var(--accent)";
           return (
             <button
               key={`${d.id}-${i}`}
@@ -235,6 +236,7 @@ export function ExploreScreen() {
   const [searchDateB, setSearchDateB] = useState("Sun 27 Sep");
   const [searchTrav, setSearchTrav] = useState("2");
   const [searchWay, setSearchWay] = useState<"return" | "oneway">("return");
+  const [calendarOpen, setCalendarOpen] = useState<"depart" | "return" | null>(null);
 
   const handleSearch = (vertical: Vertical) => {
     if (!searchDest.trim()) return;
@@ -247,198 +249,246 @@ export function ExploreScreen() {
     });
   };
 
+  const openCalendar = (which: "depart" | "return") => {
+    setCalendarOpen(which);
+  };
+
+  const closeCalendar = () => {
+    setCalendarOpen(null);
+  };
+
+  const handleDateSelect = (date: string) => {
+    if (calendarOpen === "depart") {
+      setSearchDateA(date);
+    } else if (calendarOpen === "return") {
+      setSearchDateB(date);
+    }
+    closeCalendar();
+  };
+
   return (
-    <Shell
-      header={
-        <header className="top-bar top-bar-stack">
-          <div className="tb-row">
-            <Image
-              src="/images/logo2.jpeg"
-              alt="Aeris"
-              width={66}
-              height={28}
-              unoptimized
-              priority
-              className="tb-logo"
-            />
-            <button className="tb-btn" aria-label={t("common.settings")} onClick={() => go("settings")}>
-              <IconSettings />
-            </button>
-          </div>
-          <div className="tb-text">
-            <h2>{userName ? t("explore.hi", { name: userName }) : t("nav.explore")}</h2>
-            <div className="tb-sub">{t("explore.greeting")}</div>
-          </div>
-        </header>
-      }
-    >
-      <div className="screen-scroll" style={{ flex: 1 }}>
-        <div className="content" style={{ paddingTop: 8 }}>
-          <Card className="search-hero-card" style={{ padding: 16 }}>
-            <div className="vstack" style={{ gap: 12 }}>
-              <div className="hstack" style={{ gap: 8, alignItems: "flex-end" }}>
-                <div style={{ flex: 1 }}>
-                  <label className="small muted" style={{ display: "block", marginBottom: 4 }}>{t("explore.whereTo")}</label>
-                  <input
-                    type="text"
-                    value={searchDest}
-                    onChange={(e) => setSearchDest(e.target.value)}
-                    placeholder={t("explore.whereToPh")}
-                    style={{ width: "100%", padding: "12px 14px", fontSize: 16, borderRadius: 10, border: "1px solid var(--border)", background: "var(--surface)", outline: "none" }}
-                  />
+    <>
+      <Shell
+        header={
+          <header className="top-bar top-bar-stack">
+            <div className="tb-row">
+              <Image
+                src="/images/logo2.jpeg"
+                alt="Aeris"
+                width={66}
+                height={28}
+                unoptimized
+                priority
+                className="tb-logo"
+              />
+              <button className="tb-btn" aria-label={t("common.settings")} onClick={() => go("settings")}>
+                <IconSettings />
+              </button>
+            </div>
+            <div className="tb-text">
+              <h2>{userName ? t("explore.hi", { name: userName }) : t("nav.explore")}</h2>
+              <div className="tb-sub">{t("explore.greeting")}</div>
+            </div>
+          </header>
+        }
+      >
+        <div className="screen-scroll" style={{ flex: 1 }}>
+          <div className="content" style={{ paddingTop: 8 }}>
+            <Card className="search-hero-card" style={{ padding: 16 }}>
+              <div className="vstack" style={{ gap: 12 }}>
+                <div className="hstack" style={{ gap: 8, alignItems: "flex-end" }}>
+                  <div style={{ flex: 1 }}>
+                    <label className="small muted" style={{ display: "block", marginBottom: 4 }}>{t("explore.whereTo")}</label>
+                    <input
+                      type="text"
+                      value={searchDest}
+                      onChange={(e) => setSearchDest(e.target.value)}
+                      placeholder={t("explore.whereToPh")}
+                      style={{ width: "100%", padding: "12px 14px", fontSize: 16, borderRadius: 10, border: "1px solid var(--border)", background: "var(--surface)", outline: "none" }}
+                    />
+                  </div>
+                  <button
+                    className="btn btn-primary"
+                    style={{ height: 48, padding: "0 20px", flex: "none" }}
+                    onClick={() => handleSearch("flights")}
+                    disabled={!searchDest.trim()}
+                  >
+                    <IconSearch size={18} /> {t("explore.searchBtn")}
+                  </button>
                 </div>
-                <button
-                  className="btn btn-primary"
-                  style={{ height: 48, padding: "0 20px", flex: "none" }}
-                  onClick={() => handleSearch("flights")}
-                  disabled={!searchDest.trim()}
-                >
-                  <IconSearch size={18} /> {t("explore.searchBtn")}
-                </button>
-              </div>
 
-              <div className="od-grid" style={{ "--od-cols": 4, "--od-gap": "10px" } as CSSProperties}>
-                <div className="field" style={{ margin: 0 }}>
-                  <label>{t("explore.depart")}</label>
-                  <input type="text" value={searchDateA} onChange={(e) => setSearchDateA(e.target.value)} style={{ width: "100%" }} />
-                </div>
-                <div className="field" style={{ margin: 0 }}>
-                  <label>{t("explore.return")}</label>
-                  <input type="text" value={searchDateB} onChange={(e) => setSearchDateB(e.target.value)} style={{ width: "100%", opacity: searchWay === "return" ? 1 : 0.5 }} disabled={searchWay === "oneway"} />
-                </div>
-                <div className="field" style={{ margin: 0 }}>
-                  <label>{t("explore.travellersLabel")}</label>
-                  <input type="text" inputMode="numeric" value={searchTrav} onChange={(e) => setSearchTrav(e.target.value.replace(/\D/g, ""))} style={{ width: "100%" }} />
-                </div>
-                <div className="field" style={{ margin: 0 }}>
-                  <label>{t("explore.tripType")}</label>
-                  <div className="seg" style={{ width: "100%" }}>
-                    <button className={`seg-btn${searchWay === "return" ? " active" : ""}`} onClick={() => setSearchWay("return")} style={{ flex: 1 }}>
-                      {t("explore.returnTrip")}
-                    </button>
-                    <button className={`seg-btn${searchWay === "oneway" ? " active" : ""}`} onClick={() => setSearchWay("oneway")} style={{ flex: 1 }}>
-                      {t("explore.oneWay")}
-                    </button>
+                <div className="od-grid" style={{ "--od-cols": 4, "--od-gap": "10px" } as CSSProperties}>
+                  <div className="field" style={{ margin: 0 }}>
+                    <label>{t("explore.depart")}</label>
+                    <div className="field-input-wrapper">
+                      <input
+                        type="text"
+                        value={searchDateA}
+                        readOnly
+                        onClick={() => openCalendar("depart")}
+                        style={{ width: "100%", cursor: "pointer" }}
+                      />
+                      <IconCalendar size={20} className="calendar-trigger" />
+                    </div>
+                  </div>
+                  <div className="field" style={{ margin: 0 }}>
+                    <label>{t("explore.return")}</label>
+                    <div className="field-input-wrapper">
+                      <input
+                        type="text"
+                        value={searchDateB}
+                        readOnly
+                        onClick={() => openCalendar("return")}
+                        style={{ width: "100%", cursor: searchWay === "return" ? "pointer" : "not-allowed", opacity: searchWay === "return" ? 1 : 0.5 }}
+                        disabled={searchWay === "oneway"}
+                      />
+                      <IconCalendar size={20} className="calendar-trigger" />
+                    </div>
+                  </div>
+                  <div className="field" style={{ margin: 0 }}>
+                    <label>{t("explore.travellersLabel")}</label>
+                    <input type="text" inputMode="numeric" value={searchTrav} onChange={(e) => setSearchTrav(e.target.value.replace(/\D/g, ""))} style={{ width: "100%", padding: "12px 14px", fontSize: 16, borderRadius: 10, border: "1px solid var(--border)", background: "var(--surface)", outline: "none" }} />
+                  </div>
+                  <div className="field" style={{ margin: 0 }}>
+                    <label>{t("explore.tripType")}</label>
+                    <div className="radio-group">
+                      <label className="radio-option">
+                        <input type="radio" name="tripType" value="return" checked={searchWay === "return"} onChange={() => setSearchWay("return")} />
+                        <span className="radio-label">{t("explore.returnTrip")}</span>
+                      </label>
+                      <label className="radio-option">
+                        <input type="radio" name="tripType" value="oneway" checked={searchWay === "oneway"} onChange={() => setSearchWay("oneway")} />
+                        <span className="radio-label">{t("explore.oneWay")}</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </Card>
+            </Card>
 
-          <div className="ota-grid">
-            {VERTICALS.map((v) => {
-              const Icon = v.icon;
-              return (
-                <Card
-                  key={v.v}
-                  className="card-press ota-vtile"
-                  style={{ ["--vtile-grad" as string]: v.grad } as CSSProperties}
-                  onClick={() => go("ota-search", { vertical: v.v })}
-                >
-                  <div className="ota-vtile-head">
-                    <span className="ota-vtile-icon">
-                      <Icon size={20} />
-                    </span>
-                    <span className="ota-vtile-from">{t("explore.from", { p: money(v.from) })}</span>
-                  </div>
-                  <div className="ota-vtile-title">{t(`explore.vert.${v.v}`)}</div>
-                  <div className="ota-vtile-sub">{t(`explore.vert.${v.v}.sub`)}</div>
-                </Card>
-              );
-            })}
-          </div>
-
-          <section className="section" style={{ paddingLeft: 0, paddingRight: 0 }}>
-            <div className="section-row">
-              <h3 className="section-title" style={{ margin: 0 }}>
-                {t("explore.deals")}
-              </h3>
-              <span className="small muted">{t("explore.perPerson")}</span>
-            </div>
-            <CheapestDeals />
-          </section>
-
-          <section className="section" style={{ paddingLeft: 0, paddingRight: 0 }} key={seed[0]?.id ?? "seed"}>
-            <div className="section-row">
-              <h3 className="section-title" style={{ margin: 0 }}>
-                {last ? t("explore.roundOut") : t("explore.buildItinerary")}
-              </h3>
-              <Badge tone="ai">
-                <IconSparkle size={11} /> {t("explore.crossSell")}
-              </Badge>
-            </div>
-            <div className="vstack" style={{ gap: 8 }}>
-              {seed.map((o) => (
-                <Card
-                  key={o.id}
-                  className="card-press"
-                  style={{ padding: 12 }}
-                  onClick={() => go("ota-booking", { vertical: o.vertical, offerId: o.id })}
-                >
-                  <div className="hstack" style={{ gap: 12 }}>
-                    {o.photo ? (
-                      <Photo src={o.photo} ratio="1/1" alt={o.title} className="ota-thumb" />
-                    ) : (
-                      <span className="ota-thumb ota-thumb-ph" style={{ background: "var(--border-soft)" }}>
-                        {(() => {
-                          const ThumbIcon = VERT_ICON[o.vertical];
-                          return <ThumbIcon size={18} />;
-                        })()}
+            <div className="ota-grid">
+              {VERTICALS.map((v) => {
+                const Icon = v.icon;
+                return (
+                  <Card
+                    key={v.v}
+                    className="card-press ota-vtile"
+                    style={{ ["--vtile-grad" as string]: v.grad } as CSSProperties}
+                    onClick={() => go("ota-search", { vertical: v.v })}
+                  >
+                    <div className="ota-vtile-head">
+                      <span className="ota-vtile-icon">
+                        <Icon size={20} />
                       </span>
-                    )}
-                    <span className="ota-sugg-text">
-                      <span className="rl-title">{o.title}</span>
-                      <span className="rl-sub">
-                        {withRate(o)} · &#9733; {o.rating}
-                      </span>
-                    </span>
-                    <b className="ota-sugg-price">{money(o.price)}</b>
-                  </div>
-                </Card>
-              ))}
+                      <span className="ota-vtile-from">{t("explore.from", { p: money(v.from) })}</span>
+                    </div>
+                    <div className="ota-vtile-title">{t(`explore.vert.${v.v}`)}</div>
+                    <div className="ota-vtile-sub">{t(`explore.vert.${v.v}.sub`)}</div>
+                  </Card>
+                );
+              })}
             </div>
-          </section>
 
-          {first && (
             <section className="section" style={{ paddingLeft: 0, paddingRight: 0 }}>
               <div className="section-row">
                 <h3 className="section-title" style={{ margin: 0 }}>
-                  {t("explore.continue")}
+                  {t("explore.deals")}
                 </h3>
-                <button className="btn-ghost btn-sm" onClick={() => go("trips-home")}>
-                  {t("explore.allTrips")} <IconChevronRight size={13} />
-                </button>
+                <span className="small muted">{t("explore.perPerson")}</span>
               </div>
-              <Card className="card-press" style={{ padding: 14 }} onClick={() => toTrip(first.id)}>
-                <div className="ota-card-row">
-                  {first.photo ? (
-                    <span className="cc-media">
-                      <Photo src={first.photo} ratio="1/1" alt={first.destination} />
-                    </span>
-                  ) : null}
-                  <div className="ota-card-body">
-                    <div className="rl-title">{first.name}</div>
-                    <div className="rl-sub">
-                      {first.destination} - {first.dates}
-                    </div>
-                    <div className="hstack" style={{ gap: 6, marginTop: 8 }}>
-                      {first.mode === "group" ? (
-                        <Badge tone="ai">
-                          <IconUsers size={11} /> {t("tripsHome.groupOf", { n: first.travellers.length })}
-                        </Badge>
-                      ) : (
-                        <Badge tone="teal">{t("createTrip.soloBtn")}</Badge>
-                      )}
-                    </div>
-                  </div>
-                  <IconChevronRight size={18} className="muted" style={{ marginRight: 14, flex: "none" }} />
-                </div>
-              </Card>
+              <CheapestDeals />
             </section>
-          )}
+
+            <section className="section" style={{ paddingLeft: 0, paddingRight: 0 }} key={seed[0]?.id ?? "seed"}>
+              <div className="section-row">
+                <h3 className="section-title" style={{ margin: 0 }}>
+                  {last ? t("explore.roundOut") : t("explore.buildItinerary")}
+                </h3>
+                <Badge tone="ai">
+                  <IconSparkle size={11} /> {t("explore.crossSell")}
+                </Badge>
+              </div>
+              <div className="vstack" style={{ gap: 8 }}>
+                {seed.map((o) => (
+                  <Card
+                    key={o.id}
+                    className="card-press"
+                    style={{ padding: 12 }}
+                    onClick={() => go("ota-booking", { vertical: o.vertical, offer: o })}
+                  >
+                    <div className="hstack" style={{ gap: 12 }}>
+                      {o.photo ? (
+                        <Photo src={o.photo} ratio="1/1" alt={o.title} className="ota-thumb" />
+                      ) : (
+                        <span className="ota-thumb ota-thumb-ph" style={{ background: "var(--border-soft)" }}>
+                          {(() => {
+                            const ThumbIcon = VERT_ICON[o.vertical];
+                            return <ThumbIcon size={18} />;
+                          })()}
+                        </span>
+                      )}
+                      <span className="ota-sugg-text">
+                        <span className="rl-title">{o.title}</span>
+                        <span className="rl-sub">
+                          {withRate(o)} · &#9733; {o.rating}
+                        </span>
+                      </span>
+                      <b className="ota-sugg-price">{money(o.price)}</b>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </section>
+
+            {first && (
+              <section className="section" style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <div className="section-row">
+                  <h3 className="section-title" style={{ margin: 0 }}>
+                    {t("explore.continue")}
+                  </h3>
+                  <button className="btn-ghost btn-sm" onClick={() => go("trips-home")}>
+                    {t("explore.allTrips")} <IconChevronRight size={13} />
+                  </button>
+                </div>
+                <Card className="card-press" style={{ padding: 14 }} onClick={() => toTrip(first.id)}>
+                  <div className="ota-card-row">
+                    {first.photo ? (
+                      <span className="cc-media">
+                        <Photo src={first.photo} ratio="1/1" alt={first.destination} />
+                      </span>
+                    ) : null}
+                    <div className="ota-card-body">
+                      <div className="rl-title">{first.name}</div>
+                      <div className="rl-sub">
+                        {first.destination} - {first.dates}
+                      </div>
+                      <div className="hstack" style={{ gap: 6, marginTop: 8 }}>
+                        {first.mode === "group" ? (
+                          <Badge tone="ai">
+                            <IconUsers size={11} /> {t("tripsHome.groupOf", { n: first.travellers.length })}
+                          </Badge>
+                        ) : (
+                          <Badge tone="teal">{t("createTrip.soloBtn")}</Badge>
+                        )}
+                      </div>
+                    </div>
+                    <IconChevronRight size={18} className="muted" style={{ marginRight: 14, flex: "none" }} />
+                  </div>
+                </Card>
+              </section>
+            )}
+          </div>
         </div>
-      </div>
-    </Shell>
+      </Shell>
+      <CalendarModal
+        isOpen={!!calendarOpen}
+        onClose={closeCalendar}
+        title={calendarOpen === "depart" ? t("explore.depart") : t("explore.return")}
+        selectedDate={calendarOpen === "depart" ? searchDateA : searchDateB}
+        onSelect={handleDateSelect}
+        minDate={calendarOpen === "return" ? searchDateA : undefined}
+      />
+    </>
   );
 }
 
