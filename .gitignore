@@ -4,3 +4,6 @@ _next/
 index.html
 404.html
 index.txt
+.env
+.env.*
+!.env.example
