@@ -26,6 +26,8 @@ export function CalendarModal({
     const d = selectedDate ? new Date(selectedDate) : new Date();
     return new Date(d.getFullYear(), d.getMonth(), 1);
   });
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
+  const [showYearPicker, setShowYearPicker] = useState(false);
 
   const daysInMonth = (date: Date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   const firstDayOfMonth = (date: Date) => new Date(date.getFullYear(), date.getMonth(), 1).getDay();
@@ -36,12 +38,17 @@ export function CalendarModal({
 
   const prevMonth = () => setViewDate((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1));
   const nextMonth = () => setViewDate((d) => new Date(d.getFullYear(), d.getMonth() + 1, 1));
+  const setMonth = (month: number) => { setViewDate((d) => new Date(d.getFullYear(), month, 1)); setShowMonthPicker(false); };
+  const setYear = (year: number) => { setViewDate((d) => new Date(year, d.getMonth(), 1)); setShowYearPicker(false); };
 
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   const days = Array.from({ length: daysInMonth(viewDate) }, (_, i) => i + 1);
   const firstDay = firstDayOfMonth(viewDate);
+
+  const currentYear = new Date().getFullYear();
+  const yearRange = Array.from({ length: 20 }, (_, i) => currentYear - 5 + i);
 
   return (
     <div className="calendar-modal-overlay" onClick={onClose}>
@@ -56,13 +63,38 @@ export function CalendarModal({
           <button className="calendar-nav-btn" onClick={prevMonth} aria-label="Previous month">
             <IconChevronRight size={20} style={{ transform: "rotate(180deg)" }} />
           </button>
-          <span className="calendar-month-year">
-            {monthNames[viewDate.getMonth()]} {viewDate.getFullYear()}
-          </span>
+          <div className="calendar-month-year-wrapper" onClick={() => setShowMonthPicker(true)}>
+            <span className="calendar-month-year">
+              {monthNames[viewDate.getMonth()]} {viewDate.getFullYear()}
+            </span>
+            <IconChevronRight size={14} style={{ marginLeft: 6, transform: "rotate(90deg)", color: "var(--muted)" }} />
+          </div>
           <button className="calendar-nav-btn" onClick={nextMonth} aria-label="Next month">
             <IconChevronRight size={20} />
           </button>
         </div>
+        {showMonthPicker && (
+          <div className="calendar-picker-overlay" onClick={() => setShowMonthPicker(false)}>
+            <div className="calendar-picker" onClick={(e) => e.stopPropagation()}>
+              {monthNames.map((m, i) => (
+                <button key={i} className={`calendar-picker-item${i === viewDate.getMonth() ? " selected" : ""}`} onClick={() => setMonth(i)}>
+                  {m}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {showYearPicker && (
+          <div className="calendar-picker-overlay" onClick={() => setShowYearPicker(false)}>
+            <div className="calendar-picker" onClick={(e) => e.stopPropagation()}>
+              {yearRange.map((y) => (
+                <button key={y} className={`calendar-picker-item${y === viewDate.getFullYear() ? " selected" : ""}`} onClick={() => setYear(y)}>
+                  {y}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
         <div className="calendar-grid">
           {dayNames.map((d) => (
             <div key={d} className="calendar-day-header">{d}</div>

@@ -294,7 +294,7 @@ export function ExploreScreen() {
       >
         <div className="screen-scroll" style={{ flex: 1 }}>
           <div className="content" style={{ paddingTop: 8 }}>
-            <Card className="search-hero-card" style={{ padding: 16 }}>
+            <Card className="search-hero-card" style={{ padding: 16, marginBottom: 24 }}>
               <div className="vstack" style={{ gap: 12 }}>
                 <div className="hstack" style={{ gap: 8, alignItems: "flex-end" }}>
                   <div style={{ flex: 1 }}>
@@ -317,7 +317,7 @@ export function ExploreScreen() {
                   </button>
                 </div>
 
-                <div className="od-grid" style={{ "--od-cols": 4, "--od-gap": "10px" } as CSSProperties}>
+                <div className="od-grid" style={{ "--od-cols": 3, "--od-gap": "10px" } as CSSProperties}>
                   <div className="field" style={{ margin: 0 }}>
                     <label>{t("explore.depart")}</label>
                     <div className="field-input-wrapper">
@@ -349,18 +349,17 @@ export function ExploreScreen() {
                     <label>{t("explore.travellersLabel")}</label>
                     <input type="text" inputMode="numeric" value={searchTrav} onChange={(e) => setSearchTrav(e.target.value.replace(/\D/g, ""))} style={{ width: "100%", padding: "12px 14px", fontSize: 16, borderRadius: 10, border: "1px solid var(--border)", background: "var(--surface)", outline: "none" }} />
                   </div>
-                  <div className="field" style={{ margin: 0 }}>
-                    <label>{t("explore.tripType")}</label>
-                    <div className="radio-group">
-                      <label className="radio-option">
-                        <input type="radio" name="tripType" value="return" checked={searchWay === "return"} onChange={() => setSearchWay("return")} />
-                        <span className="radio-label">{t("explore.returnTrip")}</span>
-                      </label>
-                      <label className="radio-option">
-                        <input type="radio" name="tripType" value="oneway" checked={searchWay === "oneway"} onChange={() => setSearchWay("oneway")} />
-                        <span className="radio-label">{t("explore.oneWay")}</span>
-                      </label>
-                    </div>
+                </div>
+
+                <div className="field" style={{ margin: 0 }}>
+                  <label>{t("explore.tripType")}</label>
+                  <div className="seg" style={{ width: "100%" }}>
+                    <button className={`seg-btn${searchWay === "return" ? " active" : ""}`} onClick={() => setSearchWay("return")} style={{ flex: 1 }}>
+                      {t("explore.returnTrip")}
+                    </button>
+                    <button className={`seg-btn${searchWay === "oneway" ? " active" : ""}`} onClick={() => setSearchWay("oneway")} style={{ flex: 1 }}>
+                      {t("explore.oneWay")}
+                    </button>
                   </div>
                 </div>
               </div>
