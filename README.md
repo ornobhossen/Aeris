@@ -1,12 +1,19 @@
 # ✈️ **Aeris by Iasis**
 
-**Team:** Ornob Hossen, Koh Shi Qi, Ruvenesvaran A/L Manivannan, Pang Yoke Leap (The team name is Iasis)
+**Team:** Ornob Hossen, Koh Shi Qi, Ruvenesvaran A/L Manivannan, Pang Yoke Leap
 
 **Problem Statement:** Planning an Escape
 
 **Video Presentation:** https://youtu.be/Q221x8aiMc8 (Best resolution is 1080p or 720p)&nbsp;
 
 **Presentation Slides:** https://canva.link/dyhh966uk7h0844&nbsp;
+
+# ⚠️ PROJECT UNMAINTAINED & UNFINISHED
+This project was built in a 48-hour sprint for [Hackathon Name] in [Year]. 
+It is entirely proof-of-concept, contains bugs, and is missing core features. 
+**The authors have no plans to update, maintain, or support this repository.** 
+Feel free to fork it if you want to use the codebase as a reference.
+
 
 ## 🌍 **1. Project Overview**
 
