@@ -9,7 +9,7 @@
 **Presentation Slides:** https://canva.link/dyhh966uk7h0844&nbsp;
 
 # ⚠️ PROJECT UNMAINTAINED & UNFINISHED
-This project was built in a 48-hour sprint for Codenection in 2026. 
+This project was built in a 2 week sprint for Codenection in 2026. 
 It is entirely proof-of-concept, contains bugs, and is missing core features. 
 **The authors have no plans to update, maintain, or support this repository.** 
 Feel free to fork it if you want to use the codebase as a reference.
